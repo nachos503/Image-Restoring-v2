@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Image Restoring v2", "Image Restoring v2\Image Restoring v2.csproj", "{FC4767DD-4831-4EE1-B213-B739FA0FD248}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC4767DD-4831-4EE1-B213-B739FA0FD248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4767DD-4831-4EE1-B213-B739FA0FD248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4767DD-4831-4EE1-B213-B739FA0FD248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4767DD-4831-4EE1-B213-B739FA0FD248}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74BBDAFC-8BA7-4CF6-AE08-15B6E7C7BA22}
+	EndGlobalSection
+EndGlobal
