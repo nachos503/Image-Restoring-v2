@@ -58,7 +58,6 @@ namespace Image_Restoring_v2
                 // текущему треугольнику присваивается тот треугольник, в котором находится текущая точка
                 CurentTriangle = GetTriangleForPoint(_points[i]);
 
-                System.Console.Write("Текущий треугольник не 0?  ");
                 // Если текущий треугольник существует
                 if (CurentTriangle != null)
                 {
@@ -119,13 +118,11 @@ namespace Image_Restoring_v2
                     CheckDelaunayAndRebuild(OldArc0);
                     CheckDelaunayAndRebuild(OldArc1);
                     CheckDelaunayAndRebuild(OldArc2);
-                    System.Console.Write("Проверка Делоне  ");
                 }
                 else
                 {
                     continue;
                 }
-                System.Console.WriteLine("Пройдена " + i + " точка");
             }
 
             //Дополнительный проход для проверки на критерий Делоне
@@ -147,42 +144,33 @@ namespace Image_Restoring_v2
         {
             PointCondition pointInTriangle = IsPointInTriangle;
 
-            //    System.Console.Write("100");
             // link - передача ссылки из кэша
             Triangle link = Cache.FindTriangle(_point);
-            //   System.Console.Write("1");
             // если ссылка пустая - возврат первого треугольника
             if (link == null)
             {
                 link = triangles[0];
             }
-            //   System.Console.Write("2");
             // если по ссылке передали верный треугольник - возврат ссылки на треугольник
             if (pointInTriangle(link, _point))
             {
                 return link;
-                //       System.Console.Write("3");
             }
             // если найденный треугольник не подошел
             else
             {
-                //  System.Console.Write("4");
                 //Путь от центроида найденного треугольника до искомой точки
                 Arc wayToTriangle = new Arc(_point, link.Centroid);
-                //    System.Console.Write("5");
                 Arc CurentArc;
-                //    System.Console.Write("6");
                 // Пока точка не окажется внутри треугольника
                 while (!pointInTriangle(link, _point) && iterationCount <= 50)
                 {
-                    //       System.Console.Write("7");
                     // находим ребро, которое пересекается с найденным треугольником и некоторой прямой от искомой точки
                     CurentArc = GetIntersectedArc(wayToTriangle, link);
                     if (CurentArc == null)
                     {
                         return link;
                     }
-                    //     System.Console.Write("8");
 
                     // присваиваем треугольник, в которое входит это ребро
                     // ТУТ ЕБУЧАЯ ОШИБКА ПОТОМУ ЧТО КАКОГО-ТО ХУЯ РЕБРО НЕ ПЕРЕСЕКАЕТСЯ
@@ -195,11 +183,9 @@ namespace Image_Restoring_v2
                         link = CurentArc.trBA;
                     else
                         link = CurentArc.trAB;
-                    //    System.Console.Write("9");
 
                     // если треугольник не найден, то переопределяем путь от точки до центроида нвоого треугольника
                     wayToTriangle = new Arc(_point, link.Centroid);
-                    //    System.Console.Write("10");
 
                     iterationCount++;
                 }
