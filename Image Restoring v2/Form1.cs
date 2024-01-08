@@ -98,19 +98,32 @@ namespace Image_Restoring_v2
             {
                 // Увеличиваем индекс для следующего изображения
                 currentIndex += indexIncrement;
+                buttonBackward.Enabled = true;
 
                 Bitmap currentBitmap = bitmapList[currentIndex / indexIncrement];
                 pictureBox1.Image = (Image)currentBitmap.Clone();
                 pictureBox1.Invalidate();
             }
+
+            if (currentIndex >= (int)numericUpDown1.Value * 2)
+            {
+                buttonForward.Enabled = false;
+            }
         }
 
         private void ShowPreviousImage()
-        {
+        {   
+
+            if (currentIndex <= 1000)
+            {
+                buttonBackward.Enabled = false;
+            }
+
             // Проверяем, чтобы индекс не становился меньше 0 и что кнопку можно нажмать
             if (isProcessButtonPressed && currentIndex >= indexIncrement)
             {
                 currentIndex -= indexIncrement;
+                buttonForward.Enabled=true;
 
                 // Показываем обработанное изображение в PictureBox
                 pictureBox1.Image = (Image)bitmapList[currentIndex / indexIncrement].Clone();
