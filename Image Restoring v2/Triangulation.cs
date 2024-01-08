@@ -144,13 +144,8 @@ namespace Image_Restoring_v2
         {
             PointCondition pointInTriangle = IsPointInTriangle;
 
-            // link - передача ссылки из кэша
-            Triangle link = Cache.FindTriangle(_point);
-            // если ссылка пустая - возврат первого треугольника
-            if (link == null)
-            {
-                link = triangles[0];
-            }
+            // link - передача ссылки из кэша. если ссылка пустая - возврат первого треугольника
+            Triangle link = Cache.FindTriangle(_point) ?? triangles[0];
             // если по ссылке передали верный треугольник - возврат ссылки на треугольник
             if (pointInTriangle(link, _point))
             {
