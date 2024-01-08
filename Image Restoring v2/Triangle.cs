@@ -94,7 +94,7 @@ namespace Image_Restoring_v2
         }
 
         //GetArcBeatwen2Points - метод поиска ребра по двум заданным точкам
-        public Arc GetArcBeatwen2Points(ToolPoint _a, ToolPoint _b)
+        public Arc GetArcBetween2Points(ToolPoint _a, ToolPoint _b)
         {
             for (int i = 0; i < 3; i++)
                 if (arcs[i].A == _a && arcs[i].B == _b || arcs[i].A == _b && arcs[i].B == _a)

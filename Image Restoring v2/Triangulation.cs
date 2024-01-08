@@ -68,9 +68,9 @@ namespace Image_Restoring_v2
                     NewArc2 = new Arc(CurentTriangle.points[2], _points[i]);
 
                     //Сохранение ребер преобразуемого треугольника
-                    OldArc0 = CurentTriangle.GetArcBeatwen2Points(CurentTriangle.points[0], CurentTriangle.points[1]);
-                    OldArc1 = CurentTriangle.GetArcBeatwen2Points(CurentTriangle.points[1], CurentTriangle.points[2]);
-                    OldArc2 = CurentTriangle.GetArcBeatwen2Points(CurentTriangle.points[2], CurentTriangle.points[0]);
+                    OldArc0 = CurentTriangle.GetArcBetween2Points(CurentTriangle.points[0], CurentTriangle.points[1]);
+                    OldArc1 = CurentTriangle.GetArcBetween2Points(CurentTriangle.points[1], CurentTriangle.points[2]);
+                    OldArc2 = CurentTriangle.GetArcBetween2Points(CurentTriangle.points[2], CurentTriangle.points[0]);
 
                     //Преобразование текущего треугольника в один из новых трех
                     NewTriangle0 = CurentTriangle;
@@ -136,10 +136,17 @@ namespace Image_Restoring_v2
                 CheckDelaunayAndRebuild(triangles[i].arcs[2]);
             }
         }
+
         int iterationCount = 0;
+
+        //Делегат
+        delegate bool PointCondition(Triangle _triangle, ToolPoint _point);
+
         // GetTriangleForPoint - метод, возвращающий треугольник в котором находится данная точка
         private Triangle GetTriangleForPoint(ToolPoint _point)
         {
+            PointCondition pointInTriangle = IsPointInTriangle;
+
             //    System.Console.Write("100");
             // link - передача ссылки из кэша
             Triangle link = Cache.FindTriangle(_point);
@@ -151,7 +158,7 @@ namespace Image_Restoring_v2
             }
             //   System.Console.Write("2");
             // если по ссылке передали верный треугольник - возврат ссылки на треугольник
-            if (IsPointInTriangle(link, _point))
+            if (pointInTriangle(link, _point))
             {
                 return link;
                 //       System.Console.Write("3");
@@ -166,7 +173,7 @@ namespace Image_Restoring_v2
                 Arc CurentArc;
                 //    System.Console.Write("6");
                 // Пока точка не окажется внутри треугольника
-                while (!IsPointInTriangle(link, _point) && iterationCount <= 50)
+                while (!pointInTriangle(link, _point) && iterationCount <= 50)
                 {
                     //       System.Console.Write("7");
                     // находим ребро, которое пересекается с найденным треугольником и некоторой прямой от искомой точки
