@@ -86,6 +86,13 @@ namespace Image_Restoring_v2
             numericUpDown1.Value = roundedValue;
         }
 
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            bitmapList.Clear();
+            isProcessButtonPressed = false;
+            currentIndex = 0;
+        }
+
         private void buttonForward_Click(object sender, EventArgs e)
         {
             // Если триангуляция прошла, можно жмать, иначе нельзя.
@@ -311,11 +318,6 @@ namespace Image_Restoring_v2
             }
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            bitmapList.Clear();
-            isProcessButtonPressed = false;
-            currentIndex = 0;
-        }
+
     }
 }
