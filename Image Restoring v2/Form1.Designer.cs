@@ -72,11 +72,11 @@
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.ProcessButton_Click);
             // 
-            // saveButton
+            // buttonSave
             // 
             this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonSave.Location = new System.Drawing.Point(656, 285);
-            this.buttonSave.Name = "saveButton";
+            this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(93, 44);
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить изображение";
@@ -85,6 +85,12 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Location = new System.Drawing.Point(648, 135);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
@@ -96,8 +102,6 @@
             0,
             0,
             0});
-
-            numericUpDown1.Increment = 1000;
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 5;
@@ -107,10 +111,10 @@
             0,
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown1.Validating += NumericUpDown1_Validating;
             // 
             // buttonBackward
             // 
+            this.buttonBackward.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonBackward.Location = new System.Drawing.Point(636, 235);
             this.buttonBackward.Name = "buttonBackward";
             this.buttonBackward.Size = new System.Drawing.Size(65, 27);
@@ -121,6 +125,7 @@
             // 
             // buttonForward
             // 
+            this.buttonForward.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonForward.Location = new System.Drawing.Point(723, 235);
             this.buttonForward.Name = "buttonForward";
             this.buttonForward.Size = new System.Drawing.Size(65, 27);
@@ -131,6 +136,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(649, 106);
             this.label1.Name = "label1";
