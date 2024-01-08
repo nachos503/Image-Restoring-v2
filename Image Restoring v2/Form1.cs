@@ -42,6 +42,7 @@ namespace Image_Restoring_v2
 
         private void ProcessButton_Click(object sender, EventArgs e)
         {
+            //Исключения
             if (!isProcessButtonPressed)
             {
                 try
@@ -166,6 +167,7 @@ namespace Image_Restoring_v2
             }
         }
 
+        //Реализаия метода интерфеса
         public void ApplyInterlace(Bitmap image)
         {
             // Пример простого интерлейса - замена каждого пятого пикселя на черный

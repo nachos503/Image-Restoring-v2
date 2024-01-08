@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Image_Restoring_v2
 {
+    //Интерфейс
     public interface IImageProcessor
     {
         void ApplyInterlace(Bitmap image);

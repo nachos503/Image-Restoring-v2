@@ -77,6 +77,7 @@ namespace Image_Restoring_v2
                 points[2] = _arc1.A;
             else if (points[2] != _arc2.A && points[2] != _arc2.B)
             {
+                //Исключения
                 throw new Exception("Попытка создать треугольник из трех непересекающихся ребер");
             }
 
