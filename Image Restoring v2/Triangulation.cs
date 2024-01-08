@@ -254,7 +254,7 @@ namespace Image_Restoring_v2
 
             if (_CheckNode == null)
             {
-                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.");
+                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.\nЛибо попробуйте снова.");
             }
 
             double x0 = _CheckNode.x;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Image_Restoring_v2
 {
@@ -45,12 +46,21 @@ namespace Image_Restoring_v2
             {
                 try
                 {
-                    Process();
+                    // Используем Stopwatch для замера времени
+                    Stopwatch stopwatch = new Stopwatch();
+                    stopwatch.Start();
+
+                    Triangulator();
                     isProcessButtonPressed = true;
                     buttonForward.Enabled = true;
                     buttonBackward.Enabled = true;
                     buttonSave.Enabled=true;
-                    MessageBox.Show("Триангуляция завершена успешно. \n Для выбора изображений нажимайте на кнопки 'Вперед' и 'Назад'");
+
+                    stopwatch.Stop();
+                    // Используем Process для получения информации об использовании памяти
+                    Process currentProcess = Process.GetCurrentProcess();
+
+                    MessageBox.Show($"Триангуляция завершена успешно за {stopwatch.ElapsedMilliseconds} миллисекунд(ы).\nИспользование памяти: {currentProcess.WorkingSet64 / (1024 * 1024)} MB \n Для выбора изображений нажимайте на кнопки 'Вперед' и 'Назад'");  
                 }
                 catch (Exception ex)
                 {
@@ -156,7 +166,7 @@ namespace Image_Restoring_v2
             }
         }
 
-        private void Process()
+        private void Triangulator()
         {
 
             // Применяем интерлейс (портим изображение (зачем-то это нужно(заказчик так просил)))

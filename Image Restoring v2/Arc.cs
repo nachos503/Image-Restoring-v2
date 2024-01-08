@@ -160,7 +160,7 @@ namespace Image_Restoring_v2
         {
             if (pk == null)
             {
-                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.");
+                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек. \n Либо попробуйте снова.");
             }
 
             if ((Math.Min(pi.x, pj.x) <= pk.x && pk.x <= Math.Max(pi.x, pj.x)) && (Math.Min(pi.y, pj.y) <= pk.y && pk.y <= Math.Max(pi.y, pj.y)))
