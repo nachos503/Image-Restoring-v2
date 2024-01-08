@@ -14,7 +14,7 @@ namespace Image_Restoring_v2
     {
         private string imagePath;
         private Bitmap bitmap;
-        private bool isProcessButtonPressed = false;
+        private bool isProcessButtonPressed = true;
         List<Bitmap> bitmapList = new List<Bitmap>();
         private int indexIncrement = 1000;
         private int currentIndex = 0;
@@ -22,6 +22,9 @@ namespace Image_Restoring_v2
         public Form1()
         {
             InitializeComponent();
+            buttonForward.Enabled = false;
+            buttonBackward.Enabled = false;
+            buttonSave.Enabled = false;
         }
 
         private void ButtonLoadImage_Click(object sender, EventArgs e)
@@ -40,13 +43,22 @@ namespace Image_Restoring_v2
         {
             if (!isProcessButtonPressed)
             {
-                Process();
-                isProcessButtonPressed = true;
-
-                // Разблокируем кнопки "Вперед" и "Назад" после нажатия ProcessButton
-                buttonForward.Enabled = true;
-                buttonBackward.Enabled = true;
+                try
+                {
+                    Process();
+                    isProcessButtonPressed = true;
+                    buttonForward.Enabled = true;
+                    buttonBackward.Enabled = true;
+                    buttonSave.Enabled=true;
+                    MessageBox.Show("Триангуляция завершена успешно. \n Для выбора изображений нажимайте на кнопки 'Вперед' и 'Назад'");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+            else
+                MessageBox.Show("Для начала загрузите изорбажение с помощью кнопки 'Загрузить изображение'");
         }
 
         private void Form1_Load(object sender, EventArgs e)

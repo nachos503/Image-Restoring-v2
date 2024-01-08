@@ -31,10 +31,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonLoadImage = new System.Windows.Forms.Button();
             this.processButton = new System.Windows.Forms.Button();
-            this.saveButton = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.buttonBackward = new System.Windows.Forms.Button();
             this.buttonForward = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -52,7 +53,7 @@
             // buttonLoadImage
             // 
             this.buttonLoadImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonLoadImage.Location = new System.Drawing.Point(648, 53);
+            this.buttonLoadImage.Location = new System.Drawing.Point(656, 32);
             this.buttonLoadImage.Name = "buttonLoadImage";
             this.buttonLoadImage.Size = new System.Drawing.Size(101, 51);
             this.buttonLoadImage.TabIndex = 1;
@@ -73,18 +74,18 @@
             // 
             // saveButton
             // 
-            this.saveButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.saveButton.Location = new System.Drawing.Point(656, 285);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(93, 44);
-            this.saveButton.TabIndex = 4;
-            this.saveButton.Text = "Сохранить изображение";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonSave.Location = new System.Drawing.Point(656, 285);
+            this.buttonSave.Name = "saveButton";
+            this.buttonSave.Size = new System.Drawing.Size(93, 44);
+            this.buttonSave.TabIndex = 4;
+            this.buttonSave.Text = "Сохранить изображение";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(648, 129);
+            this.numericUpDown1.Location = new System.Drawing.Point(648, 135);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -125,15 +126,25 @@
             this.buttonForward.UseVisualStyleBackColor = true;
             this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(649, 106);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 26);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Количество точек \r\nдля триангуляции";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonForward);
             this.Controls.Add(this.buttonBackward);
             this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.saveButton);
+            this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.buttonLoadImage);
             this.Controls.Add(this.pictureBox1);
@@ -143,6 +154,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -151,10 +163,11 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonLoadImage;
         private System.Windows.Forms.Button processButton;
-        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button buttonBackward;
         private System.Windows.Forms.Button buttonForward;
+        private System.Windows.Forms.Label label1;
     }
 }
 

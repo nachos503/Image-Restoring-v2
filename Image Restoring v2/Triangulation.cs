@@ -251,6 +251,12 @@ namespace Image_Restoring_v2
         //РАЗОБРАТЬ ПОТОМ ПОТОМУ ЧТО ЗДЕСЬ ОТКРОВЕННОЕ НЕПОНЯТНОЕ ДЕРЬМО
         private static bool IsDelaunay(ToolPoint A, ToolPoint B, ToolPoint C, ToolPoint _CheckNode)
         {
+
+            if (_CheckNode == null)
+            {
+                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.");
+            }
+
             double x0 = _CheckNode.x;
             double y0 = _CheckNode.y;
             double x1 = A.x;

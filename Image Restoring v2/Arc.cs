@@ -158,6 +158,11 @@ namespace Image_Restoring_v2
         // OnSegment - метод, который проверяет, лежит ли точка pk на отрезке, образованном двумя другими точками pi и pj
         private static bool OnSegment(ToolPoint pi, ToolPoint pj, ToolPoint pk)
         {
+            if (pk == null)
+            {
+                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.");
+            }
+
             if ((Math.Min(pi.x, pj.x) <= pk.x && pk.x <= Math.Max(pi.x, pj.x)) && (Math.Min(pi.y, pj.y) <= pk.y && pk.y <= Math.Max(pi.y, pj.y)))
                 return true;
             else
