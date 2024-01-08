@@ -15,6 +15,9 @@ namespace Image_Restoring_v2
         private string imagePath;
         private Bitmap bitmap;
         private bool isProcessButtonPressed = false;
+        List<Bitmap> bitmapList = new List<Bitmap>();
+        private int indexIncrement = 1000;
+        private int currentIndex = 0;
 
         public Form1()
         {
@@ -23,6 +26,12 @@ namespace Image_Restoring_v2
 
         private void ButtonLoadImage_Click(object sender, EventArgs e)
         {
+            // Удаляем хранилище изображений перед загрузкой нового (если оно не пустое)
+            if (bitmapList.Count > 0) 
+            {
+                bitmapList.Clear();
+            }
+            //Загружаем новое изображение 
             LoadImage();
             isProcessButtonPressed = false;
         }
@@ -33,6 +42,10 @@ namespace Image_Restoring_v2
             {
                 Process();
                 isProcessButtonPressed = true;
+
+                // Разблокируем кнопки "Вперед" и "Назад" после нажатия ProcessButton
+                buttonForward.Enabled = true;
+                buttonBackward.Enabled = true;
             }
         }
 
@@ -41,43 +54,54 @@ namespace Image_Restoring_v2
 
         }
 
-        private int currentIndex = 1000;
-
         private void buttonForward_Click(object sender, EventArgs e)
         {
-            ShowNextImage();
+            // Если триангуляция прошла, можно жмать, иначе нельзя.
+            if (isProcessButtonPressed)
+            {
+                ShowNextImage();
+            }
+            else
+            {
+                MessageBox.Show("Сначала нажмите кнопку 'Триангуляция'.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void buttonBackward_Click(object sender, EventArgs e)
         {
-            ShowPreviousImage();
+        // Если триангуляция прошла, можно жмать, иначе нельзя.
+            if (isProcessButtonPressed)
+            {
+                ShowPreviousImage();
+            }
+            else
+            {
+                MessageBox.Show("Сначала нажмите кнопку 'Триангуляция'.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void ShowNextImage()
         {
-            string imageName = $"Triangulation{currentIndex}.jpg";
-            Bitmap currentBitmap = new Bitmap(imageName);
+            if (isProcessButtonPressed && currentIndex < (int)numericUpDown1.Value * 2)
+            {
+                // Увеличиваем индекс для следующего изображения
+                currentIndex += indexIncrement;
 
-            // Показываем обработанное изображение в PictureBox
-            pictureBox1.Image = (Image)currentBitmap.Clone();
-            pictureBox1.Invalidate();
-
-            // Увеличиваем индекс для следующего изображения
-            currentIndex += 1000;
+                Bitmap currentBitmap = bitmapList[currentIndex / indexIncrement];
+                pictureBox1.Image = (Image)currentBitmap.Clone();
+                pictureBox1.Invalidate();
+            }
         }
 
         private void ShowPreviousImage()
         {
-            // Проверяем, чтобы индекс не становился меньше 1000
-            if (currentIndex > 1000)
+            // Проверяем, чтобы индекс не становился меньше 0 и что кнопку можно нажмать
+            if (isProcessButtonPressed && currentIndex >= indexIncrement)
             {
-                currentIndex -= 1000;
-
-                string imageName = $"Triangulation{currentIndex}.jpg";
-                Bitmap currentBitmap = new Bitmap(imageName);
+                currentIndex -= indexIncrement;
 
                 // Показываем обработанное изображение в PictureBox
-                pictureBox1.Image = (Image)currentBitmap.Clone();
+                pictureBox1.Image = (Image)bitmapList[currentIndex / indexIncrement].Clone();
                 pictureBox1.Invalidate();
             }
         }
@@ -100,8 +124,12 @@ namespace Image_Restoring_v2
 
         private void Process()
         {
+
             // Применяем интерлейс (портим изображение (зачем-то это нужно(заказчик так просил)))
             ApplyInterlace(bitmap);
+            Bitmap processedBitmap = new Bitmap(bitmap);
+
+
 
             // Создание списка точек для триангуляции
             List<ToolPoint> Points = new List<ToolPoint>
@@ -129,15 +157,15 @@ namespace Image_Restoring_v2
             Triangulation triangulation = new Triangulation(Points);
 
             // Рисование и закрашивание треугольников на изображении
-            using (Graphics g = Graphics.FromImage(bitmap))
+            using (Graphics g = Graphics.FromImage(processedBitmap))
             {
                 int i = 0;
                 foreach (var triangle in triangulation.triangles)
                 {
                     i++;
-                    Color color1 = GetPixel(bitmap, (int)triangle.points[0].x, (int)triangle.points[0].y);
-                    Color color2 = GetPixel(bitmap, (int)triangle.points[1].x, (int)triangle.points[1].y);
-                    Color color3 = GetPixel(bitmap, (int)triangle.points[2].x, (int)triangle.points[2].y);
+                    Color color1 = GetPixel(processedBitmap, (int)triangle.points[0].x, (int)triangle.points[0].y);
+                    Color color2 = GetPixel(processedBitmap, (int)triangle.points[1].x, (int)triangle.points[1].y);
+                    Color color3 = GetPixel(processedBitmap, (int)triangle.points[2].x, (int)triangle.points[2].y);
 
                     float alpha = 2f / 3f; // коэффициент для линейной интерполяции
 
@@ -155,13 +183,11 @@ namespace Image_Restoring_v2
                     new Point(Math.Max(0, (int)triangle.points[2].x), Math.Max(0, (int)triangle.points[2].y))
                 });
 
-                // Сохраняем каждую 1000-ую итерацию изображения с треугольниками
-                // Нужно для наглядности процесса
-                // Для прикола можно потом сделать, чтобы это заносилось в ??? (массив мб какой-нибудь если так можно)
-                // ПОДУМАТЬ НАДО.
-                    if (i % 1000 == 0)
+                // Добавляем в лист каждую 1000-ую итерацию изображения с треугольниками
+                    if (i % indexIncrement == 0 || i == 0)
                     {
-                        bitmap.Save($"Triangulation{i}.jpg");
+                        // Добавляем обработанное изображение в список
+                        bitmapList.Add(new Bitmap(processedBitmap));
                     }
                 }
             }
@@ -203,7 +229,7 @@ namespace Image_Restoring_v2
             return image.GetPixel(x, y);
         }
 
-        static void ApplyInterlace(Bitmap image)
+        void ApplyInterlace(Bitmap image)
         {
             // Пример простого интерлейса - замена каждого пятого пикселя на черный
             for (int y = 1; y < image.Height; y += 5)
@@ -213,7 +239,7 @@ namespace Image_Restoring_v2
                     image.SetPixel(x, y, Color.Black);
                 }
             }
-            image.Save("InterlacedImage.jpg");
+            bitmapList.Add(image);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -234,9 +260,16 @@ namespace Image_Restoring_v2
                 if (result == DialogResult.OK)
                 {
                     // Сохраняем изображение в выбранном месте
-                    bitmap.Save(saveFileDialog.FileName);
+                    bitmapList[currentIndex/ indexIncrement].Save(saveFileDialog.FileName);
                 }
             }
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            bitmapList.Clear();
+            isProcessButtonPressed = false;
+            currentIndex = 0;
         }
     }
 }
