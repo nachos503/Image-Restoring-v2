@@ -14,6 +14,7 @@ namespace Image_Restoring_v2
     {
         private string imagePath;
         private Bitmap bitmap;
+        private bool isProcessButtonPressed = false;
 
         public Form1()
         {
@@ -23,11 +24,16 @@ namespace Image_Restoring_v2
         private void ButtonLoadImage_Click(object sender, EventArgs e)
         {
             LoadImage();
+            isProcessButtonPressed = false;
         }
 
         private void ProcessButton_Click_1(object sender, EventArgs e)
         {
-            Process();
+            if (!isProcessButtonPressed)
+            {
+                Process();
+                isProcessButtonPressed = true;
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -43,11 +49,11 @@ namespace Image_Restoring_v2
 
             Bitmap currentBitmap = new Bitmap(imageName);
 
-            // Покажите обработанное изображение в PictureBox
+            // Показываем обработанное изображение в PictureBox
             pictureBox1.Image = (Image)currentBitmap.Clone();
             pictureBox1.Invalidate();
 
-            // Increment the index for the next image
+            // Скипаем следующие 1000 итераций для наглядности 
             currentIndex += 1000;
         }
 
@@ -69,6 +75,7 @@ namespace Image_Restoring_v2
 
         private void Process()
         {
+            // Применяем интерлейс (портим изображение (зачем-то это нужно(заказчик так просил)))
             ApplyInterlace(bitmap);
 
             // Создание списка точек для триангуляции
@@ -84,7 +91,7 @@ namespace Image_Restoring_v2
 
             // Добавление случайных точек с минимальным расстоянием в один пиксель
             Random random = new Random();
-            int numberOfRandomPoints = 10000; // Установите количество случайных точек
+            int numberOfRandomPoints = (int)numericUpDown1.Value; // Установите количество случайных точек
             int minDistance = 1; // Минимальное расстояние между точками в пикселях
 
             for (int i = 0; i < numberOfRandomPoints; i++)
@@ -184,9 +191,9 @@ namespace Image_Restoring_v2
             image.Save("InterlacedImage.jpg");
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void saveButton_Click(object sender, EventArgs e)
         {
-            // Создаем объект OpenFileDialog
+            // Создаем объект SaveFileDialog
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 // Устанавливаем фильтр для файлов изображений

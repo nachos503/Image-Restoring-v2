@@ -33,7 +33,9 @@
             this.processButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -49,7 +51,7 @@
             // buttonLoadImage
             // 
             this.buttonLoadImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonLoadImage.Location = new System.Drawing.Point(648, 125);
+            this.buttonLoadImage.Location = new System.Drawing.Point(648, 53);
             this.buttonLoadImage.Name = "buttonLoadImage";
             this.buttonLoadImage.Size = new System.Drawing.Size(101, 51);
             this.buttonLoadImage.TabIndex = 1;
@@ -60,7 +62,7 @@
             // processButton
             // 
             this.processButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.processButton.Location = new System.Drawing.Point(648, 182);
+            this.processButton.Location = new System.Drawing.Point(648, 173);
             this.processButton.Name = "processButton";
             this.processButton.Size = new System.Drawing.Size(101, 32);
             this.processButton.TabIndex = 2;
@@ -87,13 +89,27 @@
             this.saveButton.TabIndex = 4;
             this.saveButton.Text = "Сохранить изображение";
             this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.button2_Click);
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(648, 129);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 5;
+            // Устанавливаем диапазон значений
+            this.numericUpDown1.Minimum = 1000;
+            this.numericUpDown1.Maximum = 10000;
+
+            // Устанавливаем начальное значение (необязательно)
+            this.numericUpDown1.Value = 1000;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.processButton);
@@ -103,6 +119,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -114,6 +131,7 @@
         private System.Windows.Forms.Button processButton;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
 

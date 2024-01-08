@@ -23,6 +23,18 @@ namespace Image_Restoring_v2
         // Переписанные операторы для работы с ToolPoint
         public static ToolPoint operator -(ToolPoint _a, ToolPoint _b)
         {
+            if (_a == null)
+            {
+                // Обработка, если _a равно null
+                // Возвращаем ToolPoint с нулевыми координатами
+                return new ToolPoint(0, 0);
+            }
+
+            if (_b == null)
+            { 
+                return new ToolPoint(0, 0);
+            }
+
             return new ToolPoint(_a.x - _b.x, _a.y - _b.y);
         }
         public static ToolPoint operator +(ToolPoint _a, ToolPoint _b)
