@@ -122,16 +122,18 @@ namespace Image_Restoring_v2
                     new Point(Math.Max(0, (int)triangle.points[1].x), Math.Max(0, (int)triangle.points[1].y)),
                     new Point(Math.Max(0, (int)triangle.points[2].x), Math.Max(0, (int)triangle.points[2].y))
                 });
+
+                // Сохраняем каждую 1000-ую итерацию изображения с треугольниками
+                // Нужно для наглядности процесса
+                // Для прикола можно потом сделать, чтобы это заносилось в ??? (массив мб какой-нибудь если так можно)
+                // ПОДУМАТЬ НАДО.
                     if (i % 1000 == 0)
                     {
-                        //  pictureBox1.Image = (Image)bitmap.Clone();
                         bitmap.Save($"Triangulation{i}.jpg");
                     }
                 }
             }
 
-            // Сохранение результата
-            bitmap.Save("TriangulatedImage.jpg");
         }
 
         // Функция для генерации случайной точки с минимальным расстоянием от существующих точек
@@ -180,6 +182,29 @@ namespace Image_Restoring_v2
                 }
             }
             image.Save("InterlacedImage.jpg");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Создаем объект OpenFileDialog
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                // Устанавливаем фильтр для файлов изображений
+                saveFileDialog.Filter = "JPEG Files (*.jpg)|*.jpg|All files (*.*)|*.*";
+
+                // Устанавливаем начальное имя файла и расширение
+                saveFileDialog.FileName = "TriangulatedImage.jpg";
+
+                // Открываем диалоговое окно сохранения файла
+                DialogResult result = saveFileDialog.ShowDialog();
+
+                // Проверяем, был ли файл выбран и нажата кнопка "Сохранить"
+                if (result == DialogResult.OK)
+                {
+                    // Сохраняем изображение в выбранном месте
+                    bitmap.Save(saveFileDialog.FileName);
+                }
+            }
         }
     }
 }
