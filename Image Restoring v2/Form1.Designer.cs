@@ -96,6 +96,8 @@
             0,
             0,
             0});
+
+            numericUpDown1.Increment = 1000;
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 5;
@@ -105,6 +107,7 @@
             0,
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDown1.Validating += NumericUpDown1_Validating;
             // 
             // buttonBackward
             // 

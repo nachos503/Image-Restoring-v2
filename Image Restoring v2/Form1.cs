@@ -66,6 +66,15 @@ namespace Image_Restoring_v2
 
         }
 
+        private void NumericUpDown1_Validating(object sender, CancelEventArgs e)
+        {
+            // Округляем введенное значение к ближайшему кратному 1000
+            decimal roundedValue = Math.Round(numericUpDown1.Value / 1000) * 1000;
+
+            // Устанавливаем округленное значение
+            numericUpDown1.Value = roundedValue;
+        }
+
         private void buttonForward_Click(object sender, EventArgs e)
         {
             // Если триангуляция прошла, можно жмать, иначе нельзя.
