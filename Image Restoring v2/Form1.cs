@@ -183,28 +183,20 @@ namespace Image_Restoring_v2
 
         private void Triangulator()
         {
-
-            // Применяем интерлейс (портим изображение (зачем-то это нужно(заказчик так просил)))
             ApplyInterlace(bitmap);
             Bitmap processedBitmap = new Bitmap(bitmap);
 
-
-
-            // Создание списка точек для триангуляции
             List<ToolPoint> Points = new List<ToolPoint>
             {
-
-                // Добавление "рамочных" точек
                 new ToolPoint(0, 0),
                 new ToolPoint(bitmap.Width, 0),
                 new ToolPoint(bitmap.Width, bitmap.Height),
                 new ToolPoint(0, bitmap.Height)
             };
 
-            // Добавление случайных точек с минимальным расстоянием в один пиксель
             Random random = new Random();
-            int numberOfRandomPoints = (int)numericUpDown1.Value; // Установите количество случайных точек
-            int minDistance = 1; // Минимальное расстояние между точками в пикселях
+            int numberOfRandomPoints = (int)numericUpDown1.Value;
+            int minDistance = 1;
 
             for (int i = 0; i < numberOfRandomPoints; i++)
             {
@@ -212,46 +204,49 @@ namespace Image_Restoring_v2
                 Points.Add(randomPoint);
             }
 
-            // Создание объекта триангуляции
             Triangulation triangulation = new Triangulation(Points);
 
-            // Рисование и закрашивание треугольников на изображении
-            using (Graphics g = Graphics.FromImage(processedBitmap))
+            object lockObject = new object(); // Объект блокировки для синхронизации доступа к общим данным
+            int j = 0;
+
+            //параллельный поток для закрашивания треугольников. каждый треугольник обрабатывается независимо от других
+            Parallel.ForEach(triangulation.triangles, triangle =>
             {
-                int i = 0;
-                foreach (var triangle in triangulation.triangles)
+                j++;
+                Color color1, color2, color3;
+                lock (lockObject) // Блокировка доступа к GetPixel
                 {
-                    i++;
-                    Color color1 = GetPixel(processedBitmap, (int)triangle.points[0].x, (int)triangle.points[0].y);
-                    Color color2 = GetPixel(processedBitmap, (int)triangle.points[1].x, (int)triangle.points[1].y);
-                    Color color3 = GetPixel(processedBitmap, (int)triangle.points[2].x, (int)triangle.points[2].y);
+                    color1 = GetPixel(processedBitmap, (int)triangle.points[0].x, (int)triangle.points[0].y);
+                    color2 = GetPixel(processedBitmap, (int)triangle.points[1].x, (int)triangle.points[1].y);
+                    color3 = GetPixel(processedBitmap, (int)triangle.points[2].x, (int)triangle.points[2].y);
+                }
 
-                    float alpha = 2f / 3f; // коэффициент для линейной интерполяции
+                float alpha = 2f / 3f;
+                int avgR = (int)((1 - alpha) * color1.R + alpha * (color2.R + color3.R) / 2);
+                int avgG = (int)((1 - alpha) * color1.G + alpha * (color2.G + color3.G) / 2);
+                int avgB = (int)((1 - alpha) * color1.B + alpha * (color2.B + color3.B) / 2);
+                Color avgColor = Color.FromArgb(avgR, avgG, avgB);
 
-                    int avgR = (int)((1 - alpha) * color1.R + alpha * (color2.R + color3.R) / 2);
-                    int avgG = (int)((1 - alpha) * color1.G + alpha * (color2.G + color3.G) / 2);
-                    int avgB = (int)((1 - alpha) * color1.B + alpha * (color2.B + color3.B) / 2);
-
-                    Color avgColor = Color.FromArgb(avgR, avgG, avgB);
-
-                    // Закрашивание треугольника средним значением цвета
-                    Brush brush = new SolidBrush(avgColor);
-                    g.FillPolygon(brush, new Point[] {
-                    new Point(Math.Max(0, (int)triangle.points[0].x), Math.Max(0, (int)triangle.points[0].y)),
-                    new Point(Math.Max(0, (int)triangle.points[1].x), Math.Max(0, (int)triangle.points[1].y)),
-                    new Point(Math.Max(0, (int)triangle.points[2].x), Math.Max(0, (int)triangle.points[2].y))
-                });
-
-                // Добавляем в лист каждую 1000-ую итерацию изображения с треугольниками
-                    if (i % indexIncrement == 0 || i == 0)
+                lock (lockObject) // Блокировка доступа к изображению
+                {
+                    using (Graphics g = Graphics.FromImage(processedBitmap))
                     {
-                        // Добавляем обработанное изображение в список
-                        bitmapList.Add(new Bitmap(processedBitmap));
+                        Brush brush = new SolidBrush(avgColor);
+                        g.FillPolygon(brush, new Point[] {
+                            new Point(Math.Max(0, (int)triangle.points[0].x), Math.Max(0, (int)triangle.points[0].y)),
+                            new Point(Math.Max(0, (int)triangle.points[1].x), Math.Max(0, (int)triangle.points[1].y)),
+                            new Point(Math.Max(0, (int)triangle.points[2].x), Math.Max(0, (int)triangle.points[2].y))
+                        });
+
+                        if (j % indexIncrement == 0 || j == 0)
+                        {
+                            bitmapList.Add(new Bitmap(processedBitmap));
+                        }
                     }
                 }
-            }
-
+            });
         }
+
 
         // Функция для генерации случайной точки с минимальным расстоянием от существующих точек
         static ToolPoint GenerateRandomPoint(Random random, int maxWidth, int maxHeight, int minDistance, List<ToolPoint> existingPoints)
