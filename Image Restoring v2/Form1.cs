@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace Image_Restoring_v2
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IImageProcessor
     {
         private string imagePath;
         private Bitmap bitmap;
@@ -166,6 +166,19 @@ namespace Image_Restoring_v2
             }
         }
 
+        public void ApplyInterlace(Bitmap image)
+        {
+            // Пример простого интерлейса - замена каждого пятого пикселя на черный
+            for (int y = 1; y < image.Height; y += 5)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    image.SetPixel(x, y, Color.Black);
+                }
+            }
+            bitmapList.Add(image);
+        }
+
         private void Triangulator()
         {
 
@@ -271,19 +284,6 @@ namespace Image_Restoring_v2
             x = Math.Max(0, Math.Min(x, image.Width - 1));
             y = Math.Max(0, Math.Min(y, image.Height - 1));
             return image.GetPixel(x, y);
-        }
-
-        void ApplyInterlace(Bitmap image)
-        {
-            // Пример простого интерлейса - замена каждого пятого пикселя на черный
-            for (int y = 1; y < image.Height; y += 5)
-            {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    image.SetPixel(x, y, Color.Black);
-                }
-            }
-            bitmapList.Add(image);
         }
 
         private void saveButton_Click(object sender, EventArgs e)
