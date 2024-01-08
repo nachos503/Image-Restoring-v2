@@ -16,8 +16,8 @@ namespace Image_Restoring_v2
         private string imagePath;
         private Bitmap bitmap;
         private bool isProcessButtonPressed = true;
-        List<Bitmap> bitmapList = new List<Bitmap>();
-        private int indexIncrement = 1000;
+        readonly List<Bitmap> bitmapList = new List<Bitmap>();
+        private readonly int indexIncrement = 1000;
         private int currentIndex = 0;
 
         public Form1()
@@ -86,14 +86,7 @@ namespace Image_Restoring_v2
             numericUpDown1.Value = roundedValue;
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            bitmapList.Clear();
-            isProcessButtonPressed = false;
-            currentIndex = 0;
-        }
-
-        private void buttonForward_Click(object sender, EventArgs e)
+        private void ButtonForward_Click(object sender, EventArgs e)
         {
             // Если триангуляция прошла, можно жмать, иначе нельзя.
             if (isProcessButtonPressed)
@@ -106,7 +99,7 @@ namespace Image_Restoring_v2
             }
         }
 
-        private void buttonBackward_Click(object sender, EventArgs e)
+        private void ButtonBackward_Click(object sender, EventArgs e)
         {
         // Если триангуляция прошла, можно жмать, иначе нельзя.
             if (isProcessButtonPressed)
@@ -290,7 +283,7 @@ namespace Image_Restoring_v2
             return image.GetPixel(x, y);
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             // Создаем объект SaveFileDialog
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
@@ -313,6 +306,11 @@ namespace Image_Restoring_v2
             }
         }
 
-
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            bitmapList.Clear();
+            isProcessButtonPressed = false;
+            currentIndex = 0;
+        }
     }
 }

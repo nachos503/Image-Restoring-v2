@@ -75,13 +75,13 @@
             // buttonSave
             // 
             this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonSave.Location = new System.Drawing.Point(656, 285);
+            this.buttonSave.Location = new System.Drawing.Point(664, 297);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(93, 44);
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить изображение";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.saveButton_Click);
+            this.buttonSave.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // numericUpDown1
             // 
@@ -110,8 +110,7 @@
             0,
             0,
             0});
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown1.Validating += NumericUpDown1_Validating;
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
             // 
             // buttonBackward
             // 
@@ -122,7 +121,7 @@
             this.buttonBackward.TabIndex = 6;
             this.buttonBackward.Text = "Назад";
             this.buttonBackward.UseVisualStyleBackColor = true;
-            this.buttonBackward.Click += new System.EventHandler(this.buttonBackward_Click);
+            this.buttonBackward.Click += new System.EventHandler(this.ButtonBackward_Click);
             // 
             // buttonForward
             // 
@@ -133,7 +132,7 @@
             this.buttonForward.TabIndex = 7;
             this.buttonForward.Text = "Вперед";
             this.buttonForward.UseVisualStyleBackColor = true;
-            this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
+            this.buttonForward.Click += new System.EventHandler(this.ButtonForward_Click);
             // 
             // label1
             // 

@@ -71,17 +71,23 @@ namespace Image_Restoring_v2
             points[0] = _arc0.A;
             points[1] = _arc0.B;
 
-            if (_arc1.A == _arc0.A || _arc1.A == _arc0.B)
-                points[2] = _arc1.B;
-            else if (_arc1.B == _arc0.A || _arc1.B == _arc0.B)
-                points[2] = _arc1.A;
-            else if (points[2] != _arc2.A && points[2] != _arc2.B)
+            //создание двух массивов содержащие точки из ребер
+            ToolPoint[] arc1Points = new ToolPoint[] { _arc1.A, _arc1.B };
+            ToolPoint[] arc2Points = new ToolPoint[] { _arc2.A, _arc2.B };
+
+            //С помощью метода Intersect из LINQ находится пересечение между arc1Points и arc2Points. Затем с помощью метода FirstOrDefault получается первая общая точка или null, если общей точки нет
+            ToolPoint point2 = arc1Points.Intersect(arc2Points).FirstOrDefault();
+
+            if (point2 != null)
             {
-                //Исключения
+                points[2] = point2;
+            }
+            else
+            {
                 throw new Exception("Попытка создать треугольник из трех непересекающихся ребер");
             }
-
         }
+
 
         //GetThirdPoint - метод получения третий точки треугольника, зная ребро
         public ToolPoint GetThirdPoint(Arc _arc)

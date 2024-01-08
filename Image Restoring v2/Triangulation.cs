@@ -58,7 +58,6 @@ namespace Image_Restoring_v2
                 // текущему треугольнику присваивается тот треугольник, в котором находится текущая точка
                 CurentTriangle = GetTriangleForPoint(_points[i]);
 
-                System.Console.Write("Текущий треугольник не 0?  ");
                 // Если текущий треугольник существует
                 if (CurentTriangle != null)
                 {
@@ -119,13 +118,11 @@ namespace Image_Restoring_v2
                     CheckDelaunayAndRebuild(OldArc0);
                     CheckDelaunayAndRebuild(OldArc1);
                     CheckDelaunayAndRebuild(OldArc2);
-                    System.Console.Write("Проверка Делоне  ");
                 }
                 else
                 {
                     continue;
                 }
-                System.Console.WriteLine("Пройдена " + i + " точка");
             }
 
             //Дополнительный проход для проверки на критерий Делоне
@@ -147,42 +144,28 @@ namespace Image_Restoring_v2
         {
             PointCondition pointInTriangle = IsPointInTriangle;
 
-            //    System.Console.Write("100");
-            // link - передача ссылки из кэша
-            Triangle link = Cache.FindTriangle(_point);
-            //   System.Console.Write("1");
-            // если ссылка пустая - возврат первого треугольника
-            if (link == null)
-            {
-                link = triangles[0];
-            }
-            //   System.Console.Write("2");
+            // link - передача ссылки из кэша. если ссылка пустая - возврат первого треугольника
+            Triangle link = Cache.FindTriangle(_point) ?? triangles[0];
             // если по ссылке передали верный треугольник - возврат ссылки на треугольник
             if (pointInTriangle(link, _point))
             {
                 return link;
-                //       System.Console.Write("3");
             }
             // если найденный треугольник не подошел
             else
             {
-                //  System.Console.Write("4");
                 //Путь от центроида найденного треугольника до искомой точки
                 Arc wayToTriangle = new Arc(_point, link.Centroid);
-                //    System.Console.Write("5");
                 Arc CurentArc;
-                //    System.Console.Write("6");
                 // Пока точка не окажется внутри треугольника
                 while (!pointInTriangle(link, _point) && iterationCount <= 50)
                 {
-                    //       System.Console.Write("7");
                     // находим ребро, которое пересекается с найденным треугольником и некоторой прямой от искомой точки
                     CurentArc = GetIntersectedArc(wayToTriangle, link);
                     if (CurentArc == null)
                     {
                         return link;
                     }
-                    //     System.Console.Write("8");
 
                     // присваиваем треугольник, в которое входит это ребро
                     // ТУТ ЕБУЧАЯ ОШИБКА ПОТОМУ ЧТО КАКОГО-ТО ХУЯ РЕБРО НЕ ПЕРЕСЕКАЕТСЯ
@@ -195,11 +178,9 @@ namespace Image_Restoring_v2
                         link = CurentArc.trBA;
                     else
                         link = CurentArc.trAB;
-                    //    System.Console.Write("9");
 
                     // если треугольник не найден, то переопределяем путь от точки до центроида нвоого треугольника
                     wayToTriangle = new Arc(_point, link.Centroid);
-                    //    System.Console.Write("10");
 
                     iterationCount++;
                 }
@@ -258,7 +239,6 @@ namespace Image_Restoring_v2
         //РАЗОБРАТЬ ПОТОМ ПОТОМУ ЧТО ЗДЕСЬ ОТКРОВЕННОЕ НЕПОНЯТНОЕ ДЕРЬМО
         private static bool IsDelaunay(ToolPoint A, ToolPoint B, ToolPoint C, ToolPoint _CheckNode)
         {
-            //Исключения
             if (_CheckNode == null)
             {
                 throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.\nЛибо попробуйте снова.");
@@ -266,36 +246,30 @@ namespace Image_Restoring_v2
 
             double x0 = _CheckNode.x;
             double y0 = _CheckNode.y;
-            double x1 = A.x;
-            double y1 = A.y;
-            double x2 = B.x;
-            double y2 = B.y;
-            double x3 = C.x;
-            double y3 = C.y;
-
-            double[] matrix = { (x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0), x1 - x0, y1 - y0,
-                                 (x2 - x0)*(x2 - x0) + (y2 - y0)*(y2 - y0), x2 - x0, y2 - y0,
-                                 (x3 - x0)*(x3 - x0) + (y3 - y0)*(y3 - y0), x3 - x0, y3 - y0};
+            double[] matrix = new double[]
+            {
+                (A.x - x0) * (A.x - x0) + (A.y - y0) * (A.y - y0),
+                A.x - x0,
+                A.y - y0,
+                (B.x - x0) * (B.x - x0) + (B.y - y0) * (B.y - y0),
+                B.x - x0,
+                B.y - y0,
+                (C.x - x0) * (C.x - x0) + (C.y - y0) * (C.y - y0),
+                C.x - x0,
+                C.y - y0
+            };
 
             double matrixDeterminant = matrix[0] * matrix[4] * matrix[8] + matrix[1] * matrix[5] * matrix[6] + matrix[2] * matrix[3] * matrix[7] -
-                                        matrix[2] * matrix[4] * matrix[6] - matrix[0] * matrix[5] * matrix[7] - matrix[1] * matrix[3] * matrix[8];
+                                       matrix[2] * matrix[4] * matrix[6] - matrix[0] * matrix[5] * matrix[7] - matrix[1] * matrix[3] * matrix[8];
 
-            double a = x1 * y2 * 1 + y1 * 1 * x3 + 1 * x2 * y3
-                     - 1 * y2 * x3 - y1 * x2 * 1 - 1 * y3 * x1;
+            double a = A.x * B.y * 1 + A.y * 1 * C.x + 1 * B.x * C.y - 1 * B.y * C.x - A.y * B.x * 1 - 1 * C.y * A.x;
 
-            //Sgn(a)
             if (a < 0)
                 matrixDeterminant *= -1d;
 
-            if (matrixDeterminant < 0d)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return matrixDeterminant < 0d;
         }
+
 
         //CheckDelaunayAndRebuild - метод который тожепроверяет принадлежность к критерию и перестраивает треугольник
         //АНАЛОГИЧНО
