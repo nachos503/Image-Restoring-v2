@@ -75,7 +75,7 @@
             // buttonSave
             // 
             this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonSave.Location = new System.Drawing.Point(656, 285);
+            this.buttonSave.Location = new System.Drawing.Point(664, 297);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(93, 44);
             this.buttonSave.TabIndex = 4;
@@ -111,7 +111,6 @@
             0,
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            this.numericUpDown1.Validating += NumericUpDown1_Validating;
             // 
             // buttonBackward
             // 

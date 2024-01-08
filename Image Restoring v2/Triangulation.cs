@@ -258,7 +258,6 @@ namespace Image_Restoring_v2
         //РАЗОБРАТЬ ПОТОМ ПОТОМУ ЧТО ЗДЕСЬ ОТКРОВЕННОЕ НЕПОНЯТНОЕ ДЕРЬМО
         private static bool IsDelaunay(ToolPoint A, ToolPoint B, ToolPoint C, ToolPoint _CheckNode)
         {
-            //Исключения
             if (_CheckNode == null)
             {
                 throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек.\nЛибо попробуйте снова.");
@@ -266,36 +265,30 @@ namespace Image_Restoring_v2
 
             double x0 = _CheckNode.x;
             double y0 = _CheckNode.y;
-            double x1 = A.x;
-            double y1 = A.y;
-            double x2 = B.x;
-            double y2 = B.y;
-            double x3 = C.x;
-            double y3 = C.y;
-
-            double[] matrix = { (x1 - x0)*(x1 - x0) + (y1 - y0)*(y1 - y0), x1 - x0, y1 - y0,
-                                 (x2 - x0)*(x2 - x0) + (y2 - y0)*(y2 - y0), x2 - x0, y2 - y0,
-                                 (x3 - x0)*(x3 - x0) + (y3 - y0)*(y3 - y0), x3 - x0, y3 - y0};
+            double[] matrix = new double[]
+            {
+                (A.x - x0) * (A.x - x0) + (A.y - y0) * (A.y - y0),
+                A.x - x0,
+                A.y - y0,
+                (B.x - x0) * (B.x - x0) + (B.y - y0) * (B.y - y0),
+                B.x - x0,
+                B.y - y0,
+                (C.x - x0) * (C.x - x0) + (C.y - y0) * (C.y - y0),
+                C.x - x0,
+                C.y - y0
+            };
 
             double matrixDeterminant = matrix[0] * matrix[4] * matrix[8] + matrix[1] * matrix[5] * matrix[6] + matrix[2] * matrix[3] * matrix[7] -
-                                        matrix[2] * matrix[4] * matrix[6] - matrix[0] * matrix[5] * matrix[7] - matrix[1] * matrix[3] * matrix[8];
+                                       matrix[2] * matrix[4] * matrix[6] - matrix[0] * matrix[5] * matrix[7] - matrix[1] * matrix[3] * matrix[8];
 
-            double a = x1 * y2 * 1 + y1 * 1 * x3 + 1 * x2 * y3
-                     - 1 * y2 * x3 - y1 * x2 * 1 - 1 * y3 * x1;
+            double a = A.x * B.y * 1 + A.y * 1 * C.x + 1 * B.x * C.y - 1 * B.y * C.x - A.y * B.x * 1 - 1 * C.y * A.x;
 
-            //Sgn(a)
             if (a < 0)
                 matrixDeterminant *= -1d;
 
-            if (matrixDeterminant < 0d)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return matrixDeterminant < 0d;
         }
+
 
         //CheckDelaunayAndRebuild - метод который тожепроверяет принадлежность к критерию и перестраивает треугольник
         //АНАЛОГИЧНО
