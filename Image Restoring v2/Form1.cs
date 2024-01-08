@@ -43,18 +43,43 @@ namespace Image_Restoring_v2
 
         private int currentIndex = 1000;
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonForward_Click(object sender, EventArgs e)
+        {
+            ShowNextImage();
+        }
+
+        private void buttonBackward_Click(object sender, EventArgs e)
+        {
+            ShowPreviousImage();
+        }
+
+        private void ShowNextImage()
         {
             string imageName = $"Triangulation{currentIndex}.jpg";
-
             Bitmap currentBitmap = new Bitmap(imageName);
 
             // Показываем обработанное изображение в PictureBox
             pictureBox1.Image = (Image)currentBitmap.Clone();
             pictureBox1.Invalidate();
 
-            // Скипаем следующие 1000 итераций для наглядности 
+            // Увеличиваем индекс для следующего изображения
             currentIndex += 1000;
+        }
+
+        private void ShowPreviousImage()
+        {
+            // Проверяем, чтобы индекс не становился меньше 1000
+            if (currentIndex > 1000)
+            {
+                currentIndex -= 1000;
+
+                string imageName = $"Triangulation{currentIndex}.jpg";
+                Bitmap currentBitmap = new Bitmap(imageName);
+
+                // Показываем обработанное изображение в PictureBox
+                pictureBox1.Image = (Image)currentBitmap.Clone();
+                pictureBox1.Invalidate();
+            }
         }
 
         private void LoadImage()

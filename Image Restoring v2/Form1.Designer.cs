@@ -31,9 +31,10 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonLoadImage = new System.Windows.Forms.Button();
             this.processButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.buttonBackward = new System.Windows.Forms.Button();
+            this.buttonForward = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -62,23 +63,13 @@
             // processButton
             // 
             this.processButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.processButton.Location = new System.Drawing.Point(648, 173);
+            this.processButton.Location = new System.Drawing.Point(648, 170);
             this.processButton.Name = "processButton";
-            this.processButton.Size = new System.Drawing.Size(101, 32);
+            this.processButton.Size = new System.Drawing.Size(120, 32);
             this.processButton.TabIndex = 2;
-            this.processButton.Text = "Продолжить";
+            this.processButton.Text = "Триангулировать";
             this.processButton.UseVisualStyleBackColor = true;
             this.processButton.Click += new System.EventHandler(this.ProcessButton_Click_1);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(653, 237);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(96, 30);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // saveButton
             // 
@@ -94,24 +85,54 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Location = new System.Drawing.Point(648, 129);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 5;
-            // Устанавливаем диапазон значений
-            this.numericUpDown1.Minimum = 1000;
-            this.numericUpDown1.Maximum = 10000;
-
-            // Устанавливаем начальное значение (необязательно)
-            this.numericUpDown1.Value = 1000;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
+            // buttonBackward
+            // 
+            this.buttonBackward.Location = new System.Drawing.Point(636, 235);
+            this.buttonBackward.Name = "buttonBackward";
+            this.buttonBackward.Size = new System.Drawing.Size(65, 27);
+            this.buttonBackward.TabIndex = 6;
+            this.buttonBackward.Text = "Назад";
+            this.buttonBackward.UseVisualStyleBackColor = true;
+            this.buttonBackward.Click += new System.EventHandler(this.buttonBackward_Click);
+            // 
+            // buttonForward
+            // 
+            this.buttonForward.Location = new System.Drawing.Point(723, 235);
+            this.buttonForward.Name = "buttonForward";
+            this.buttonForward.Size = new System.Drawing.Size(65, 27);
+            this.buttonForward.TabIndex = 7;
+            this.buttonForward.Text = "Вперед";
+            this.buttonForward.UseVisualStyleBackColor = true;
+            this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonForward);
+            this.Controls.Add(this.buttonBackward);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.saveButton);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.buttonLoadImage);
             this.Controls.Add(this.pictureBox1);
@@ -129,9 +150,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonLoadImage;
         private System.Windows.Forms.Button processButton;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button buttonBackward;
+        private System.Windows.Forms.Button buttonForward;
     }
 }
 
