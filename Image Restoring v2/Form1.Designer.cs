@@ -69,7 +69,7 @@
             this.processButton.TabIndex = 2;
             this.processButton.Text = "Триангулировать";
             this.processButton.UseVisualStyleBackColor = true;
-            this.processButton.Click += new System.EventHandler(this.ProcessButton_Click_1);
+            this.processButton.Click += new System.EventHandler(this.ProcessButton_Click);
             // 
             // saveButton
             // 

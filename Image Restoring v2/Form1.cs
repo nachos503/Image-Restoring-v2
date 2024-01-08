@@ -27,7 +27,7 @@ namespace Image_Restoring_v2
             isProcessButtonPressed = false;
         }
 
-        private void ProcessButton_Click_1(object sender, EventArgs e)
+        private void ProcessButton_Click(object sender, EventArgs e)
         {
             if (!isProcessButtonPressed)
             {
