@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace Image_Restoring_v2
 {
@@ -28,6 +29,11 @@ namespace Image_Restoring_v2
             buttonSave.Enabled = false;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void ButtonLoadImage_Click(object sender, EventArgs e)
         {
             // Удаляем хранилище изображений перед загрузкой нового (если оно не пустое)
@@ -40,7 +46,7 @@ namespace Image_Restoring_v2
             isProcessButtonPressed = false;
         }
 
-        private void ProcessButton_Click(object sender, EventArgs e)
+        private void TruangulatorButton_Click(object sender, EventArgs e)
         {
             //Исключения
             if (!isProcessButtonPressed)
@@ -71,12 +77,6 @@ namespace Image_Restoring_v2
             else
                 MessageBox.Show("Для начала загрузите изорбажение с помощью кнопки 'Загрузить изображение'");
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void NumericUpDown1_Validating(object sender, CancelEventArgs e)
         {
             // Округляем введенное значение к ближайшему кратному 1000
@@ -84,6 +84,13 @@ namespace Image_Restoring_v2
 
             // Устанавливаем округленное значение
             numericUpDown1.Value = roundedValue;
+        }
+
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            bitmapList.Clear();
+            isProcessButtonPressed = false;
+            currentIndex = 0;
         }
 
         private void ButtonForward_Click(object sender, EventArgs e)
@@ -112,6 +119,7 @@ namespace Image_Restoring_v2
             }
         }
 
+        // Метод для показа следующего варианта изображения
         private void ShowNextImage()
         {
             if (isProcessButtonPressed && currentIndex < (int)numericUpDown1.Value * 2)
@@ -131,6 +139,7 @@ namespace Image_Restoring_v2
             }
         }
 
+        // Метод для показа предыдущего варианта изображения
         private void ShowPreviousImage()
         {   
 
@@ -150,7 +159,7 @@ namespace Image_Restoring_v2
                 pictureBox1.Invalidate();
             }
         }
-
+        // Метод для загрузки изображения
         private void LoadImage()
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -159,13 +168,28 @@ namespace Image_Restoring_v2
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    imagePath = openFileDialog.FileName;
-                    bitmap = new Bitmap(imagePath);
-                    pictureBox1.Image = (Image)bitmap.Clone();
-                    pictureBox1.Invalidate();
+                    string selectedFileName = openFileDialog.FileName;
+                    string selectedFileExtension = Path.GetExtension(selectedFileName).ToLower();
+
+                    // Список разрешенных расширений
+                    string[] allowedExtensions = { ".bmp", ".jpg", ".jpeg", ".png", ".gif", ".tif", ".tiff" };
+
+                    // Проверка, является ли выбранный файл изображением
+                    if (allowedExtensions.Contains(selectedFileExtension))
+                    {
+                        imagePath = selectedFileName;
+                        bitmap = new Bitmap(imagePath);
+                        pictureBox1.Image = (Image)bitmap.Clone();
+                        pictureBox1.Invalidate();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Выберите файл с правильным форматом изображения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
+
 
         //Реализаия метода интерфеса
         public void ApplyInterlace(Bitmap image)
@@ -304,13 +328,6 @@ namespace Image_Restoring_v2
                     bitmapList[currentIndex/ indexIncrement].Save(saveFileDialog.FileName);
                 }
             }
-        }
-
-        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-            bitmapList.Clear();
-            isProcessButtonPressed = false;
-            currentIndex = 0;
         }
     }
 }

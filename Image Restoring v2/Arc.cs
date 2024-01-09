@@ -17,21 +17,6 @@ namespace Image_Restoring_v2
         public Triangle trAB;
         public Triangle trBA;
 
-        //Ребро является границей триангуляции если не ссылается на 2 треугольника
-        //ЧТО ЭТО ПРОГРАММНО МАТЕМАТИЧЕСКОЕ НЕДОРАЗУМЕНИЕ ЗНАЧИТ ВООБЩЕ И НУЖНО ЛИ ОНО НАМ ЕСЛИ НА НЕГО НИЧЕГО НЕ ССЫЛАЕТСЯ
-        public bool IsBorder
-        {
-            get
-            {
-                if (trAB == null || trBA == null)
-                    return true;
-                else
-                    return false;
-            }
-            // свойство доступно только для чтения
-            set { }
-        }
-
         //конструктор
         public Arc(ToolPoint _A, ToolPoint _B)
         {

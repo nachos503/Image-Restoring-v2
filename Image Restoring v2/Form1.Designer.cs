@@ -70,7 +70,7 @@
             this.processButton.TabIndex = 2;
             this.processButton.Text = "Триангулировать";
             this.processButton.UseVisualStyleBackColor = true;
-            this.processButton.Click += new System.EventHandler(this.ProcessButton_Click);
+            this.processButton.Click += new System.EventHandler(this.TruangulatorButton_Click);
             // 
             // buttonSave
             // 
@@ -111,6 +111,7 @@
             0,
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
+            this.numericUpDown1.Validating += NumericUpDown1_Validating;
             // 
             // buttonBackward
             // 
