@@ -170,14 +170,14 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button buttonLoadImage;
-        private System.Windows.Forms.Button processButton;
-        private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Button buttonBackward;
-        private System.Windows.Forms.Button buttonForward;
-        private System.Windows.Forms.Label label1;
+        protected System.Windows.Forms.PictureBox pictureBox1;
+        protected System.Windows.Forms.Button buttonLoadImage;
+        protected System.Windows.Forms.Button processButton;
+        protected System.Windows.Forms.Button buttonSave;
+        protected System.Windows.Forms.NumericUpDown numericUpDown1;
+        protected System.Windows.Forms.Button buttonBackward;
+        protected System.Windows.Forms.Button buttonForward;
+        protected System.Windows.Forms.Label label1;
     }
 }
 
