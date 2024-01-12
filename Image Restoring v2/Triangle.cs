@@ -16,7 +16,7 @@ namespace Image_Restoring_v2
         //какой-то цвет для картинки
         public System.Drawing.Color color;
 
-        // Centroid - метод возвращающйи точку пересечения медиан треугольника (центроид)
+        // Centroid - метод возвращающий точку пересечения медиан треугольника (центроид)
         public ToolPoint Centroid
         {
             /*
