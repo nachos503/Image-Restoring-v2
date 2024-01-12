@@ -47,8 +47,8 @@ namespace Image_Restoring_v2
 
             // Добавление супер структуры в кэш.
             // Добавление двух смежных треугольников в кэш.
-            Cache.Add(triangles[0]);
-            Cache.Add(triangles[1]);
+            Cache.AddTriangle(triangles[0]);
+            Cache.AddTriangle(triangles[1]);
 
             Triangle CurrentTriangle;
             Triangle NewTriangle0;
@@ -123,9 +123,9 @@ namespace Image_Restoring_v2
                     triangles.Add(NewTriangle2);
 
                     // Добавление в кэш новых треугольников.
-                    Cache.Add(NewTriangle0);
-                    Cache.Add(NewTriangle1);
-                    Cache.Add(NewTriangle2);
+                    Cache.AddTriangle(NewTriangle0);
+                    Cache.AddTriangle(NewTriangle1);
+                    Cache.AddTriangle(NewTriangle2);
 
                     CheckDelaunayAndRebuild(OldArc0);
                     CheckDelaunayAndRebuild(OldArc1);
@@ -406,8 +406,8 @@ namespace Image_Restoring_v2
                         NewArcT2A1.trBA = T2;
 
                     // Добавление треугольников в кэш.
-                    Cache.Add(T1);
-                    Cache.Add(T2);
+                    Cache.AddTriangle(T1);
+                    Cache.AddTriangle(T2);
                 }
         }
     }
