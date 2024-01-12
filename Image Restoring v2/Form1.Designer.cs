@@ -43,9 +43,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureBox1.Location = new System.Drawing.Point(32, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(43, 15);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(582, 404);
+            this.pictureBox1.Size = new System.Drawing.Size(776, 497);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -53,9 +54,10 @@
             // buttonLoadImage
             // 
             this.buttonLoadImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonLoadImage.Location = new System.Drawing.Point(656, 32);
+            this.buttonLoadImage.Location = new System.Drawing.Point(875, 51);
+            this.buttonLoadImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonLoadImage.Name = "buttonLoadImage";
-            this.buttonLoadImage.Size = new System.Drawing.Size(101, 51);
+            this.buttonLoadImage.Size = new System.Drawing.Size(135, 63);
             this.buttonLoadImage.TabIndex = 1;
             this.buttonLoadImage.Text = "Загрузить изображение";
             this.buttonLoadImage.UseVisualStyleBackColor = true;
@@ -64,9 +66,10 @@
             // processButton
             // 
             this.processButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.processButton.Location = new System.Drawing.Point(648, 170);
+            this.processButton.Location = new System.Drawing.Point(875, 233);
+            this.processButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.processButton.Name = "processButton";
-            this.processButton.Size = new System.Drawing.Size(120, 32);
+            this.processButton.Size = new System.Drawing.Size(135, 39);
             this.processButton.TabIndex = 2;
             this.processButton.Text = "Триангулировать";
             this.processButton.UseVisualStyleBackColor = true;
@@ -75,9 +78,10 @@
             // buttonSave
             // 
             this.buttonSave.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonSave.Location = new System.Drawing.Point(664, 297);
+            this.buttonSave.Location = new System.Drawing.Point(875, 366);
+            this.buttonSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(93, 44);
+            this.buttonSave.Size = new System.Drawing.Size(135, 54);
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить изображение";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -91,7 +95,8 @@
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(648, 135);
+            this.numericUpDown1.Location = new System.Drawing.Point(875, 180);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -103,7 +108,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(135, 22);
             this.numericUpDown1.TabIndex = 5;
             this.numericUpDown1.Value = new decimal(new int[] {
             1000,
@@ -111,14 +116,14 @@
             0,
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.NumericUpDown1_ValueChanged);
-            this.numericUpDown1.Validating += NumericUpDown1_Validating;
             // 
             // buttonBackward
             // 
             this.buttonBackward.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonBackward.Location = new System.Drawing.Point(636, 235);
+            this.buttonBackward.Location = new System.Drawing.Point(875, 303);
+            this.buttonBackward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonBackward.Name = "buttonBackward";
-            this.buttonBackward.Size = new System.Drawing.Size(65, 27);
+            this.buttonBackward.Size = new System.Drawing.Size(57, 33);
             this.buttonBackward.TabIndex = 6;
             this.buttonBackward.Text = "Назад";
             this.buttonBackward.UseVisualStyleBackColor = true;
@@ -127,9 +132,10 @@
             // buttonForward
             // 
             this.buttonForward.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.buttonForward.Location = new System.Drawing.Point(723, 235);
+            this.buttonForward.Location = new System.Drawing.Point(940, 303);
+            this.buttonForward.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonForward.Name = "buttonForward";
-            this.buttonForward.Size = new System.Drawing.Size(65, 27);
+            this.buttonForward.Size = new System.Drawing.Size(70, 33);
             this.buttonForward.TabIndex = 7;
             this.buttonForward.Text = "Вперед";
             this.buttonForward.UseVisualStyleBackColor = true;
@@ -139,17 +145,18 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(649, 106);
+            this.label1.Location = new System.Drawing.Point(872, 144);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 26);
+            this.label1.Size = new System.Drawing.Size(129, 32);
             this.label1.TabIndex = 8;
             this.label1.Text = "Количество точек \r\nдля триангуляции";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonForward);
             this.Controls.Add(this.buttonBackward);
@@ -158,6 +165,7 @@
             this.Controls.Add(this.processButton);
             this.Controls.Add(this.buttonLoadImage);
             this.Controls.Add(this.pictureBox1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
