@@ -93,7 +93,7 @@ namespace Image_Restoring_v2
         }
 
         /// <summary>
-        /// Метод для подсчета времени.
+        /// Выбор количества точек.
         /// Строка идентификатора "M:Image_Restoring_v2.Form1.NumericUpDown1_Validating(System.Object,System.CancelEventArgs)".
         /// </summary>
         /// <param name="sender">Загрузка.</param>
@@ -105,7 +105,7 @@ namespace Image_Restoring_v2
         }
 
         /// <summary>
-        /// Метод для подсчета времени.
+        /// Изменение количества точек.
         /// Строка идентификатора "M:Image_Restoring_v2.Form1.NumericUpDown1_ValueChanged(System.Object,System.EventArgs)".
         /// </summary>
         /// <param name="sender">Загрузка.</param>
