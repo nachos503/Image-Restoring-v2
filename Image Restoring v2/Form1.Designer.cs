@@ -59,7 +59,7 @@
             this.buttonLoadImage.TabIndex = 1;
             this.buttonLoadImage.Text = "Загрузить изображение";
             this.buttonLoadImage.UseVisualStyleBackColor = true;
-            this.buttonLoadImage.Click += new System.EventHandler(this.ButtonLoadImage_Click);
+            this.buttonLoadImage.Click += new System.EventHandler(this.ClickButtonLoadImage);
             // 
             // processButton
             // 
@@ -70,7 +70,7 @@
             this.processButton.TabIndex = 2;
             this.processButton.Text = "Триангулировать";
             this.processButton.UseVisualStyleBackColor = true;
-            this.processButton.Click += new System.EventHandler(this.TruangulatorButton_Click);
+            this.processButton.Click += new System.EventHandler(this.ClickTruangulatorButton);
             // 
             // buttonSave
             // 
@@ -81,7 +81,7 @@
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить изображение";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.SaveButton_Click);
+            this.buttonSave.Click += new System.EventHandler(this.ClickSaveButton);
             // 
             // numericUpDown1
             // 
@@ -122,7 +122,7 @@
             this.buttonBackward.TabIndex = 6;
             this.buttonBackward.Text = "Назад";
             this.buttonBackward.UseVisualStyleBackColor = true;
-            this.buttonBackward.Click += new System.EventHandler(this.ButtonBackward_Click);
+            this.buttonBackward.Click += new System.EventHandler(this.ClickButtonBackward);
             // 
             // buttonForward
             // 
@@ -133,7 +133,7 @@
             this.buttonForward.TabIndex = 7;
             this.buttonForward.Text = "Вперед";
             this.buttonForward.UseVisualStyleBackColor = true;
-            this.buttonForward.Click += new System.EventHandler(this.ButtonForward_Click);
+            this.buttonForward.Click += new System.EventHandler(this.ClickButtonForward);
             // 
             // label1
             // 

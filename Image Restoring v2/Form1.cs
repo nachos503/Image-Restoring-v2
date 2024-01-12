@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.IO;
 
 namespace Image_Restoring_v2
 {
+    /// <summary>
+    ///  Класс для основной логики программы.
+    ///  Строка идентификатора "T:Image_Restoring_v2.Form1".
+    /// </summary> 
     public partial class Form1 : Form
     {
         private bool isProcessButtonPressed = true;
@@ -20,6 +17,10 @@ namespace Image_Restoring_v2
         private int currentIndex = 0;
         private readonly int indexIncrement = 1000;
 
+        /// <summary>
+        /// Конструктор.
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.#ctor".
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -33,7 +34,13 @@ namespace Image_Restoring_v2
         {
         }
 
-        private void ButtonLoadImage_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для нажатия кнопки "Загрузить изображение".
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.ClickButtonLoadImage(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
+        private void ClickButtonLoadImage(object sender, EventArgs e)
         {
             if (controller.BitmapList.Count > 0)
             {
@@ -43,7 +50,13 @@ namespace Image_Restoring_v2
             isProcessButtonPressed = false;
         }
 
-        private void TruangulatorButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для нажатия кнопки "Триангулировать".
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.ClickTruangulatorButton(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
+        private void ClickTruangulatorButton(object sender, EventArgs e)
         {
             if (!isProcessButtonPressed)
             {
@@ -61,7 +74,9 @@ namespace Image_Restoring_v2
                     stopwatch.Stop();
                     Process currentProcess = Process.GetCurrentProcess();
 
-                    MessageBox.Show($"Триангуляция завершена успешно за {stopwatch.ElapsedMilliseconds} миллисекунд(ы).\nИспользование памяти: {currentProcess.WorkingSet64 / (1024 * 1024)} MB \n Для выбора изображений нажимайте на кнопки 'Вперед' и 'Назад'");
+                    MessageBox.Show($"Триангуляция завершена успешно за {stopwatch.ElapsedMilliseconds} " +
+                        $"миллисекунд(ы).\nИспользование памяти: {currentProcess.WorkingSet64 / (1024 * 1024)} " +
+                        $"MB \n Для выбора изображений нажимайте на кнопки 'Вперед' и 'Назад'");
                 }
                 catch (Exception ex)
                 {
@@ -72,12 +87,24 @@ namespace Image_Restoring_v2
                 MessageBox.Show("Для начала загрузите изображение с помощью кнопки 'Загрузить изображение'");
         }
 
+        /// <summary>
+        /// Метод для подсчета времени.
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.NumericUpDown1_Validating(System.Object,System.CancelEventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
         private void NumericUpDown1_Validating(object sender, CancelEventArgs e)
         {
             decimal roundedValue = Math.Round(numericUpDown1.Value / 1000) * 1000;
             numericUpDown1.Value = roundedValue;
         }
 
+        /// <summary>
+        /// Метод для подсчета времени.
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.NumericUpDown1_ValueChanged(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
         private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             controller.BitmapList.Clear();
@@ -85,7 +112,13 @@ namespace Image_Restoring_v2
             currentIndex = 0;
         }
 
-        private void ButtonForward_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для нажатия кнопки "Вперед".
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.ClickButtonForward(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
+        private void ClickButtonForward(object sender, EventArgs e)
         {
             if (isProcessButtonPressed)
             {
@@ -97,7 +130,13 @@ namespace Image_Restoring_v2
             }
         }
 
-        private void ButtonBackward_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для нажатия кнопки "Назад".
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.ClickButtonBackward(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
+        private void ClickButtonBackward(object sender, EventArgs e)
         {
             if (isProcessButtonPressed)
             {
@@ -109,7 +148,13 @@ namespace Image_Restoring_v2
             }
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Метод для нажатия кнопки "Сохранить изображение".
+        /// Строка идентификатора "M:Image_Restoring_v2.Form1.ClickSaveButton(System.Object,System.EventArgs)".
+        /// </summary>
+        /// <param name="sender">Загрузка.</param>
+        /// <param name="e">Загрузка.</param>
+        private void ClickSaveButton(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
