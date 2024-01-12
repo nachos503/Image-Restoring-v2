@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace Image_Restoring_v2
 {
     /// <summary>
-    ///  Класс для основной логики программы.
+    ///  Класс для осуществления интерфеса программы.
     ///  Строка идентификатора "T:Image_Restoring_v2.Form1".
     /// </summary> 
     public partial class Form1 : Form

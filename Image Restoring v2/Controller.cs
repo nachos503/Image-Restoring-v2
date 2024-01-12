@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.IO;
 
 namespace Image_Restoring_v2
 {
     /// <summary>
-    /// Класс для обработки изображения
+    /// Класс для основной логики программы
     /// Строка идентификатора "T:Image_Restoring_v2.Controller"
     /// </summary>
     public class Controller : IImageProcessor
