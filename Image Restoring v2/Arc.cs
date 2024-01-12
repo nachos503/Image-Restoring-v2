@@ -1,23 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Image_Restoring_v2
 {
-    // Arc - класс для построения ребер
+    /// <summary>
+    ///  Класс для построения ребер между точками.
+    ///  Строка идентификатора "T:Image_Restoring_v2.Arc".
+    /// </summary>  
     public class Arc
     {
-        // точки конца ребра
+        /// <summary>
+        /// Поле, содержащее значение первого конца ребра.
+        /// Строка идентификатора "F:Image_Restoring_v2.Arc.A".
+        /// </summary>
         public ToolPoint A;
+
+        /// <summary>
+        /// Поле, содержащее значение второго конца ребра.
+        /// Строка идентификатора "F:Image_Restoring_v2.Arc.B".
+        /// </summary>
         public ToolPoint B;
 
         //Ссылка на треугольники в которые входит ребро
+        /// <summary>
+        /// Поле, ссылающееся на треугольник trAB, в который входит ребро AB.
+        /// Строка идентификатора "F:Image_Restoring_v2.Arc.trAB".
+        /// </summary>
         public Triangle trAB;
+
+        /// <summary>
+        /// Поле, ссылающееся на треугольник trBA, в который входит ребро BA.
+        /// Строка идентификатора "F:Image_Restoring_v2.Arc.trBA".
+        /// </summary>
         public Triangle trBA;
 
-        //конструктор
+        /// <summary>
+        /// Конструктор.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.#ctor(Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="_A">Значение конца ребра А.</param>
+        /// <param name="_B">Значение конца ребра B.</param>
         public Arc(ToolPoint _A, ToolPoint _B)
         {
             A = _A;
@@ -25,28 +46,34 @@ namespace Image_Restoring_v2
         }
 
         // ArcIntersect - метод, возвращающий true усли два отрезка пересекаются
-        public static bool ArcIntersect(Arc a1, Arc a2)
+        /// <summary>
+        /// Метод для проверки пересечения двух отрезков.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.IntersectArc(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="a1">Объект №1.</param>
+        /// <param name="a2">Объект №2.</param>
+        /// <returns>True, если отрезки пересекаются, иначе bool.</returns>
+        public static bool IntersectArc(Arc a1, Arc a2)
         {
-            //обозначим для удобности точки концов отрезков
+            // Обозначение точек концов отрезков.
             ToolPoint p1, p2, p3, p4;
             p1 = a1.A;
             p2 = a1.B;
             p3 = a2.A;
             p4 = a2.B;
 
-            //определение направления
-            //ХУЙ ЗНАЕТ ЗАЧЕМ НАДО ГЕОМЕТРИЮ ПЕРЕЧИТАТЬ
-            double d1 = Direction(p3, p4, p1);
-            double d2 = Direction(p3, p4, p2);
-            double d3 = Direction(p1, p2, p3);
-            double d4 = Direction(p1, p2, p4);
+            // Поля для определения направления.
+            double d1 = DetermineDirection(p3, p4, p1);
+            double d2 = DetermineDirection(p3, p4, p2);
+            double d3 = DetermineDirection(p1, p2, p3);
+            double d4 = DetermineDirection(p1, p2, p4);
 
-            /*
-             Векторное произведение этих двух векторов дает значение, которое указывает направление или ориентацию трех точек. Знак результата определяет, расположены ли точки по часовой стрелке или против часовой стрелки.
-                Если результат положительный, то точки расположены против часовой стрелки.
-                Если результат отрицательный, то точки расположены по часовой стрелке.
-                Если результат равен нулю, то точки коллинеарны, то есть лежат на одной линии.
-             */
+            // Векторное произведение этих двух векторов дает значение, которое указывает направление 
+            // или ориентацию трех точек. Знак результата определяет, расположены ли точки по часовой 
+            // стрелке или против часовой стрелки.
+            // Если результат положительный, то точки расположены против часовой стрелки.
+            // Если результат отрицательный, то точки расположены по часовой стрелке.
+            // Если результат равен нулю, то точки коллинеарны, то есть лежат на одной линии.
             if (p1 == p3 || p1 == p4 || p2 == p3 || p2 == p4)
                 return false;
 
@@ -54,32 +81,36 @@ namespace Image_Restoring_v2
                      ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0)))
                 return true;
 
-            else if ((d1 == 0) && OnSegment(p3, p4, p1))
+            else if ((d1 == 0) && LieOnSegment(p3, p4, p1))
                 return true;
 
-            else if ((d2 == 0) && OnSegment(p3, p4, p2))
+            else if ((d2 == 0) && LieOnSegment(p3, p4, p2))
                 return true;
 
-            else if ((d3 == 0) && OnSegment(p1, p2, p3))
+            else if ((d3 == 0) && LieOnSegment(p1, p2, p3))
                 return true;
 
-            else if ((d4 == 0) && OnSegment(p1, p2, p4))
+            else if ((d4 == 0) && LieOnSegment(p1, p2, p4))
                 return true;
 
             else
                 return false;
         }
 
-        // ArcIntersect - метод, возвращающий true усли два отрезка, заданные точками, пересекаются
-        //МНЕ НЕ НРАВИТСЯ ЧТО В ДВУХ МЕТОДА ОДИНАКОВЫЙ КОД
-        //НУЖНО ОСТАВИТЬ НИЖНИЙ МЕТОД КАК ЕСТЬ, А В ЕГО ПЕРЕГРУЗКЕ ВЫЗВАТЬ ЕГО ЖЕ
-        public static bool ArcIntersect(ToolPoint p1, ToolPoint p2, ToolPoint p3, ToolPoint p4)
+        /// <summary>
+        /// Метод для проверки пересечения двух отрезков.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.IntersectArc(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="a1">Объект №1.</param>
+        /// <param name="a2">Объект №2.</param>
+        /// <returns>True, если отрезки пересекаются, иначе bool.</returns>
+        public static bool IntersectArc(ToolPoint p1, ToolPoint p2, ToolPoint p3, ToolPoint p4)
         {
-            //определение направления
-            double d1 = Direction(p3, p4, p1);
-            double d2 = Direction(p3, p4, p2);
-            double d3 = Direction(p1, p2, p3);
-            double d4 = Direction(p1, p2, p4);
+            // Поля для определения направления.
+            double d1 = DetermineDirection(p3, p4, p1);
+            double d2 = DetermineDirection(p3, p4, p2);
+            double d3 = DetermineDirection(p1, p2, p3);
+            double d4 = DetermineDirection(p1, p2, p4);
 
             if (p1 == p3 || p1 == p4 || p2 == p3 || p2 == p4)
                 return false;
@@ -88,26 +119,31 @@ namespace Image_Restoring_v2
                      ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0)))
                 return true;
 
-            else if ((d1 == 0) && OnSegment(p3, p4, p1))
+            else if ((d1 == 0) && LieOnSegment(p3, p4, p1))
                 return true;
 
-            else if ((d2 == 0) && OnSegment(p3, p4, p2))
+            else if ((d2 == 0) && LieOnSegment(p3, p4, p2))
                 return true;
 
-            else if ((d3 == 0) && OnSegment(p1, p2, p3))
+            else if ((d3 == 0) && LieOnSegment(p1, p2, p3))
                 return true;
 
-            else if ((d4 == 0) && OnSegment(p1, p2, p4))
+            else if ((d4 == 0) && LieOnSegment(p1, p2, p4))
                 return true;
 
             else
                 return false;
         }
 
-        //GetCommonPoint - метод, возвращающий общую точку двух ребер
+        /// <summary>
+        /// Метод, возвращающий общую точку двух ребер.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.GetCommonPoint(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="a1">Объект №1.</param>
+        /// <param name="a2">Объект №2.</param>
+        /// <returns>Значение типа Arc, обозначающее общую точку, иначе null.</returns>
         public static ToolPoint GetCommonPoint(Arc a1, Arc a2)
         {
-            //тупой перебор
             if (a1.A == a2.A)
                 return a1.A;
 
@@ -124,32 +160,53 @@ namespace Image_Restoring_v2
                 return null;
         }
 
-        //IsConnectedWith - определяет, связаны ли ребра
+        /// <summary>
+        /// Метод, определяющий существование связи ребер.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.IsConnectedWith(Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="_a">Точка конца ребра.</param>
+        /// <returns>Значение типа bool, равное true, если точки совпадают, иначе false.</returns>
         public bool IsConnectedWith(Arc _a)
         {
-            // если точка иискомого ребра совпадает с точкой данного ребра
+            // Провека на совпадение точки конца искомого ребра с конца точкой данного ребра
             if (A == _a.A || A == _a.B || B == _a.A || B == _a.B)
                 return true;
 
             else return false;
         }
 
-        //Direction - метод, возвращающий направление через векторное произведение
-        private static double Direction(ToolPoint pi, ToolPoint pj, ToolPoint pk)
+        /// <summary>
+        /// Метод, возвращающий направление через векторное произведение.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.Direction(Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="pi">Точка pi.</param>
+        /// <param name="pj">Точка pj.</param>
+        /// <param name="pk">Точка pk.</param>
+        /// <returns>Значение типа ToolPoint, обозначающее направление через векторное произведение.</returns>
+        private static double DetermineDirection(ToolPoint pi, ToolPoint pj, ToolPoint pk)
         {
             return ToolPoint.CrossProduct((pk - pi), (pj - pi));
         }
 
-        // OnSegment - метод, который проверяет, лежит ли точка pk на отрезке, образованном двумя другими точками pi и pj
-        private static bool OnSegment(ToolPoint pi, ToolPoint pj, ToolPoint pk)
+        /// <summary>
+        /// Метод, который проверяет, лежит ли точка pk на отрезке, образованном двумя другими точками pi и pj.
+        /// Строка идентификатора "M:Image_Restoring_v2.Arc.OnSegment(Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="pi">Точка pi.</param>
+        /// <param name="pj">Точка pj.</param>
+        /// <param name="pk">Точка pk.</param>
+        /// <returns>Значение типа bool, равное true, если точка лежит на отрезке, иначе false.</returns>
+        private static bool LieOnSegment(ToolPoint pi, ToolPoint pj, ToolPoint pk)
         {
-            //Исключения
+            // Обработка исключений.
             if (pk == null)
             {
-                throw new Exception("Изображение слишком мало. Попробуйте уменьшить количество точек. \n Либо попробуйте снова.");
+                throw new Exception("Изображение слишком мало. Попробуйте уменьшить " +
+                    "количество точек. \n Либо попробуйте снова.");
             }
 
-            if ((Math.Min(pi.x, pj.x) <= pk.x && pk.x <= Math.Max(pi.x, pj.x)) && (Math.Min(pi.y, pj.y) <= pk.y && pk.y <= Math.Max(pi.y, pj.y)))
+            if ((Math.Min(pi.x, pj.x) <= pk.x && pk.x <= Math.Max(pi.x, pj.x)) 
+                && (Math.Min(pi.y, pj.y) <= pk.y && pk.y <= Math.Max(pi.y, pj.y)))
                 return true;
             else
                 return false;

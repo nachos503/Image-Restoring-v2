@@ -192,13 +192,13 @@ namespace Image_Restoring_v2
         // GetIntersectedArc - метод, возвращающий ребро треугольника которое пересекается с линией
         private static Arc GetIntersectedArc(Arc line, Triangle triangle)
         {
-            if (Arc.ArcIntersect(triangle.arcs[0], line))
+            if (Arc.IntersectArc(triangle.arcs[0], line))
                 return triangle.arcs[0];
 
-            else if (Arc.ArcIntersect(triangle.arcs[1], line))
+            else if (Arc.IntersectArc(triangle.arcs[1], line))
                 return triangle.arcs[1];
 
-            else if (Arc.ArcIntersect(triangle.arcs[2], line))
+            else if (Arc.IntersectArc(triangle.arcs[2], line))
                 return triangle.arcs[2];
 
             else
@@ -300,7 +300,7 @@ namespace Image_Restoring_v2
             //    System.Console.WriteLine("4");
 
             //Дополнительная проверка, увеличивает скорость алгоритма на 10%
-            if (Arc.ArcIntersect(CurentPoints[0], CurentPoints[3], CurentPoints[1], CurentPoints[2]))
+            if (Arc.IntersectArc(CurentPoints[0], CurentPoints[3], CurentPoints[1], CurentPoints[2]))
                 if (!IsDelaunay(CurentPoints[0], CurentPoints[1], CurentPoints[2], CurentPoints[3]))
                 {
                     //      System.Console.WriteLine("5");
