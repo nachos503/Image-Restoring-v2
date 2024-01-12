@@ -12,15 +12,37 @@ using System.IO;
 
 namespace Image_Restoring_v2
 {
+    /// <summary>
+    /// Класс для обработки изображения
+    /// Строка идентификатора "T:Image_Restoring_v2.Controller"
+    /// </summary>
     public class Controller : IImageProcessor
     {
+        /// <summary>
+        /// private Bitmap bitmap; - создаётся переменная bitmap типа Bitmap
+        /// List<Bitmap> - список который содержит объекты типа Bitmap только для чтения
+        /// indexIncrement - поле, содержащие индекс прироста, только для чтения
+        /// currentIndex - поле, содержащие изменяющийся индекс
+        /// Строка идентификатора "F:Image_Restoring_v2.Controller.bitmapList".
+        /// Строка идентификатора "F:Image_Restoring_v2.Controller.bitmap".
+        /// </summary>
         private Bitmap bitmap;
         private readonly List<Bitmap> bitmapList = new List<Bitmap>();
         private readonly int indexIncrement = 1000;
         private int currentIndex = 0;
 
+        /// <summary>
+        /// Определение свойства BitmapList
+        /// Строка идентификатора "F:Image_Restoring_v2.Controller.BitmapList".
+        /// </summary>
         public List<Bitmap> BitmapList => bitmapList;
 
+        /// <summary>
+        /// Метод, загружающий изображение из выбранного файла и его отображания его в указанном PictureBox
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.LoadImage(Image_Restoring_v2.string,Image_Restoring_v2.PictureBox)".
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="pictureBox"></param>
         public void LoadImage(string imagePath, PictureBox pictureBox)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -48,6 +70,12 @@ namespace Image_Restoring_v2
                 }
             }
         }
+
+        /// <summary>
+        /// Метод, выполняющий интерлейсинг изображения, те изменяющий цвет определенных пикселей изображения
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.ApplyInterlace(Image_Restoring_v2.Bitmap)".
+        /// </summary>
+        /// <param name="image"></param>
         public void ApplyInterlace(Bitmap image)
         {
             for (int y = 1; y < image.Height; y += 5)
@@ -60,6 +88,12 @@ namespace Image_Restoring_v2
             bitmapList.Add(new Bitmap(image));
         }
 
+        /// <summary>
+        /// Метод, выполняющий триангуляцию изображения и создающий последовательность измененных изображений, сохраняя их в список bitmapList
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.Triangulator(Image_Restoring_v2.NumericUpDown, Image_Restoring_v2.PictureBox)".
+        /// </summary>
+        /// <param name="numericUpDown"></param>
+        /// <param name="pictureBox"></param>
         public void Triangulator(NumericUpDown numericUpDown, PictureBox pictureBox)
         {
             // Создаем копию оригинальной картинки
@@ -131,6 +165,14 @@ namespace Image_Restoring_v2
             pictureBox.Invalidate();
         }
 
+        /// <summary>
+        /// Метод, обрабатывающий показ следующего изображения из списка и управляющий доступностью кнопок "Вперед" и "Назад"
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.ShowNextImage(Image_Restoring_v2.Button, Image_Restoring_v2.Button, Image_Restoring_v2.PictureBox, Image_Restoring_v2.NumericUpDown)"
+        /// </summary>
+        /// <param name="buttonForward"></param>
+        /// <param name="buttonBackward"></param>
+        /// <param name="numericUpDown"></param>
+        /// <param name="pictureBox"></param>
         public void ShowNextImage(Button buttonForward, Button buttonBackward, NumericUpDown numericUpDown, PictureBox pictureBox)
         {
             if (currentIndex < (int)numericUpDown.Value * 2)
@@ -149,6 +191,13 @@ namespace Image_Restoring_v2
             }
         }
 
+        /// <summary>
+        /// Метод, обрабатывающий отображение предыдущего изображения из списка и управляющий доступностью кнопок "Вперед" и "Назад"
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.ShowPreviousImage(Image_Restoring_v2.Button, Image_Restoring_v2.Button, Image_Restoring_v2.PictureBox)".
+        /// </summary>
+        /// <param name="buttonForward"></param>
+        /// <param name="buttonBackward"></param>
+        /// <param name="pictureBox"></param>
         public void ShowPreviousImage(Button buttonForward, Button buttonBackward, PictureBox pictureBox)
         {
             if (currentIndex <= 1000)
@@ -166,6 +215,16 @@ namespace Image_Restoring_v2
             }
         }
 
+        /// <summary>
+        /// Метод, генерирующий случайную точку в пределах указанных размеров, при условии, что она находится на приемлемом расстоянии от существующих точек
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.GenerateRandomPoint(Image_Restoring_v2.Random, Image_Restoring_v2.Int, Image_Restoring_v2.Int, Image_Restoring_v2.Int, Image_Restoring_v2.ToolPoint)"
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <param name="minDistance"></param>
+        /// <param name="existingPoints"></param>
+        /// <returns></returns>
         static ToolPoint GenerateRandomPoint(Random random, int maxWidth, int maxHeight, int minDistance, List<ToolPoint> existingPoints)
         {
             while (true)
@@ -191,6 +250,14 @@ namespace Image_Restoring_v2
             }
         }
 
+        /// <summary>
+        /// Метод, возвращающий цвет пикселя изображения по указанным координатам
+        /// Строка идентификатора "M:Image_Restoring_v2.Controller.GetPixel(Image_Restoring_v2.Bitmap, Image_Restoring_v2.Int, Image_Restoring_v2.Int)".
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         static Color GetPixel(Bitmap image, int x, int y)
         {
             x = Math.Max(0, Math.Min(x, image.Width - 1));

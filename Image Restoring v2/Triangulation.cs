@@ -21,6 +21,10 @@ namespace Image_Restoring_v2
         /// </summary>  
         public List<Triangle> triangles = new List<Triangle>();
 
+        /// <summary>
+        /// Поле для чтения
+        /// Строка идентификатора "F:Image_Restoring_v2.Triangulation.Cache".
+        /// </summary>
         private readonly DynamicCache Cache = null;
 
         /// <summary>
@@ -28,7 +32,7 @@ namespace Image_Restoring_v2
         /// Строка идентификатора "M:Image_Restoring_v2.Triangulation.#ctor(Image_Restoring_v2.ToolPoint)".
         /// </summary>
         /// <param name="_points">Ребро.</param>
-        public Triangulation(List<ToolPoint> _points)
+        public Triangulation(List<ToolPoint> _points) 
         {
             points = _points;
 

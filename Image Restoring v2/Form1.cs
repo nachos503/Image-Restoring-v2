@@ -30,6 +30,11 @@ namespace Image_Restoring_v2
             controller = new Controller();
         }
 
+        /// <summary>
+        /// Обработка события 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
         }
