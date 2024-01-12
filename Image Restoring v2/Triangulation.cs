@@ -157,7 +157,6 @@ namespace Image_Restoring_v2
                 //Путь от центроида найденного треугольника до искомой точки
                 Arc wayToTriangle = new Arc(_point, link.Centroid);
                 Arc CurentArc;
-                // Пока точка не окажется внутри треугольника
                 while (!pointInTriangle(link, _point) && iterationCount <= 50)
                 {
                     // находим ребро, которое пересекается с найденным треугольником и некоторой прямой от искомой точки
