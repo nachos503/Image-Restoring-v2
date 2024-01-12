@@ -64,6 +64,7 @@ namespace Image_Restoring_v2
         {
             // Создаем копию оригинальной картинки
             Bitmap originalBitmap = new Bitmap(bitmap);
+            currentIndex = 0;
 
             ApplyInterlace(originalBitmap);
 
