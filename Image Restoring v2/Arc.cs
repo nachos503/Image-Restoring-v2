@@ -20,7 +20,6 @@ namespace Image_Restoring_v2
         /// </summary>
         public ToolPoint B;
 
-        //Ссылка на треугольники в которые входит ребро
         /// <summary>
         /// Поле, ссылающееся на треугольник trAB, в который входит ребро AB.
         /// Строка идентификатора "F:Image_Restoring_v2.Arc.trAB".
@@ -45,7 +44,6 @@ namespace Image_Restoring_v2
             B = _B;
         }
 
-        // ArcIntersect - метод, возвращающий true усли два отрезка пересекаются
         /// <summary>
         /// Метод для проверки пересечения двух отрезков.
         /// Строка идентификатора "M:Image_Restoring_v2.Arc.IntersectArc(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".

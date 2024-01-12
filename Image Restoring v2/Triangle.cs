@@ -1,43 +1,59 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Image_Restoring_v2
 {
-    // Triangle - класс для построения треугольников
+    /// <summary>
+    ///  Класс для для построения треугольников.
+    ///  Строка идентификатора "T:Image_Restoring_v2.Triangle".
+    /// </summary>  
     public class Triangle
     {
-        // точки образающие треугольник
+        /// <summary>
+        /// Массив типа ToolPoint, содержащий значение точек, образующие треугольник.
+        /// Строка идентификатора "F:Image_Restoring_v2.Triangle.points".
+        /// </summary>
         public ToolPoint[] points = new ToolPoint[3];
-        //ребра треугольника
+
+        /// <summary>
+        /// Массив типа Arc, содержащий ребра треугольника.
+        /// Строка идентификатора "F:Image_Restoring_v2.Triangle.arcs".
+        /// </summary>
         public Arc[] arcs = new Arc[3];
+
         //какой-то цвет для картинки
         public System.Drawing.Color color;
 
-        // Centroid - метод возвращающий точку пересечения медиан треугольника (центроид)
+        /// <summary>
+        /// Метод, возвращающий точку пересечения медиан треугольника (центроид).
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.Centroid".
+        /// </summary>
+        /// <returns>Значение, равное точке пересечения медиан треугольника.</returns>
         public ToolPoint Centroid
         {
-            /*
-             * points[0] и points[1] представляют первые две вершины треугольника.
-                вычисляет вектор от первой вершины ко второй вершин
-                вычисляет половину вектора между первой и второй вершинами
-                вычисляет середину между первой и второй вершинами
-                вычисляет вектор от середины к третьей вершине
-                масштабирует вектор на 0.6666666 (приблизительно 2/3)
-                вычитает масштабированный вектор из третьей вершины, получая центроид
-             */
+            // points[0] и points[1] представляют первые две вершины треугольника.
+            // вычисляет вектор от первой вершины ко второй вершин
+            // вычисляет половину вектора между первой и второй вершинами
+            // вычисляет середину между первой и второй вершинами
+            // вычисляет вектор от середины к третьей вершине
+            // масштабирует вектор на 0.6666666 (приблизительно 2/3)
+            // вычитает масштабированный вектор из третьей вершины, получая центроид
             get
             {
                 return points[2] - ((points[2] - (points[0] + ((points[1] - points[0]) * 0.5))) * 0.6666666);
             }
 
-            // свойство доступно только для чтения
+            // Cвойство, доступное только для чтения.
             set { }
         }
 
-        //Построение треугольника по трем точкам
+        /// <summary>
+        /// Конструктор для построения треугольника по трем точкам.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.#ctor(Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="_a">Точка №1.</param>
+        /// <param name="_b">Точка №2.</param>
+        /// <param name="_c">Точка №3.</param>
         public Triangle(ToolPoint _a, ToolPoint _b, ToolPoint _c)
         {
             points[0] = _a;
@@ -49,7 +65,12 @@ namespace Image_Restoring_v2
             arcs[2] = new Arc(_c, _a);
         }
 
-        // Построение треугольника по ребру и точке
+        /// <summary>
+        /// Конструктор для построения треугольника по ребру и точке.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.#ctor(Image_Restoring_v2.Arc,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="_arc">Ребро.</param>
+        /// <param name="_a">Точка.</param>
         public Triangle(Arc _arc, ToolPoint _a)
         {
             points[0] = _arc.A;
@@ -61,7 +82,13 @@ namespace Image_Restoring_v2
             arcs[2] = new Arc(points[2], points[0]);
         }
 
-        // Построение треугольника по трем ребрам
+        /// <summary>
+        /// Конструктор для построения треугольника по трем ребрам.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.#ctor(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="_arc0">Ребро №1.</param>
+        /// <param name="_arc1">Ребро №2.</param>
+        /// <param name="_arc2">Ребро №3.</param>
         public Triangle(Arc _arc0, Arc _arc1, Arc _arc2)
         {
             arcs[0] = _arc0;
@@ -71,11 +98,14 @@ namespace Image_Restoring_v2
             points[0] = _arc0.A;
             points[1] = _arc0.B;
 
-            //создание двух массивов содержащие точки из ребер
+            // Массивы, содержащие точки из ребер.
             ToolPoint[] arc1Points = new ToolPoint[] { _arc1.A, _arc1.B };
             ToolPoint[] arc2Points = new ToolPoint[] { _arc2.A, _arc2.B };
 
-            //С помощью метода Intersect из LINQ находится пересечение между arc1Points и arc2Points. Затем с помощью метода FirstOrDefault получается первая общая точка или null, если общей точки нет
+            // С помощью метода Intersect из LINQ находится пересечение
+            // между arc1Points и arc2Points. Затем с помощью метода
+            // FirstOrDefault получается первая общая точка или null,
+            // если общей точки нет.
             ToolPoint point2 = arc1Points.Intersect(arc2Points).FirstOrDefault();
 
             if (point2 != null)
@@ -88,8 +118,12 @@ namespace Image_Restoring_v2
             }
         }
 
-
-        //GetThirdPoint - метод получения третий точки треугольника, зная ребро
+        /// <summary>
+        /// Метод для получения третий точки треугольника по известному ребру.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.GetThirdPoint(Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="_arc">Ребро.</param>
+        /// <returns>Значение, равное третьей точке треугольника, иначе false.</returns>
         public ToolPoint GetThirdPoint(Arc _arc)
         {
             for (int i = 0; i < 3; i++)
@@ -99,7 +133,13 @@ namespace Image_Restoring_v2
             return null;
         }
 
-        //GetArcBeatwen2Points - метод поиска ребра по двум заданным точкам
+        /// <summary>
+        /// Метод для поиска ребра по двум заданным точкам.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.GetArcBetween2Points(Image_Restoring_v2.ToolPoint,Image_Restoring_v2.ToolPoint)".
+        /// </summary>
+        /// <param name="_a">Точка №1.</param>
+        /// <param name="_b">Точка №2.</param>
+        /// <returns>Значение, равное искомому ребру треугольника, иначе null.</returns>
         public Arc GetArcBetween2Points(ToolPoint _a, ToolPoint _b)
         {
             for (int i = 0; i < 3; i++)
@@ -109,7 +149,14 @@ namespace Image_Restoring_v2
             return null;
         }
 
-        //GetTwoOtherArcs - метод поиска всех ребер по одному заданному
+        /// <summary>
+        /// Метод для поиска двух неизвестных ребер по одному заданному ребру.
+        /// Строка идентификатора "M:Image_Restoring_v2.Triangle.GetTwoOtherArcs(Image_Restoring_v2.Arc,Image_Restoring_v2.Arc,Image_Restoring_v2.Arc)".
+        /// </summary>
+        /// <param name="_a0">Ребро №1.</param>
+        /// <param name="_a1">Ребро №2.</param>
+        /// <param name="_a2">Ребро №3.</param>
+        /// <returns>Значения, равные искомым ребрам треугольника, иначе null.</returns>
         public void GetTwoOtherArcs(Arc _a0, out Arc _a1, out Arc _a2)
         {
             //ну тупой перебор епта
