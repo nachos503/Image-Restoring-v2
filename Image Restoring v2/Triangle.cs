@@ -4,7 +4,7 @@ using System.Linq;
 namespace Image_Restoring_v2
 {
     /// <summary>
-    ///  Класс для для построения треугольников.
+    ///  Класс для построения треугольников.
     ///  Строка идентификатора "T:Image_Restoring_v2.Triangle".
     /// </summary>  
     public class Triangle
@@ -21,7 +21,10 @@ namespace Image_Restoring_v2
         /// </summary>
         public Arc[] arcs = new Arc[3];
 
-        //какой-то цвет для картинки
+        /// <summary>
+        /// Поле цвета для картинки.
+        /// Строка идентификатора "F:Image_Restoring_v2.Triangle.color".
+        /// </summary>        
         public System.Drawing.Color color;
 
         /// <summary>
@@ -159,7 +162,6 @@ namespace Image_Restoring_v2
         /// <returns>Значения, равные искомым ребрам треугольника, иначе null.</returns>
         public void GetTwoOtherArcs(Arc _a0, out Arc _a1, out Arc _a2)
         {
-            //ну тупой перебор епта
             if (arcs[0] == _a0)
             {
                 _a1 = arcs[1];
