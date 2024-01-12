@@ -322,7 +322,6 @@ namespace Image_Restoring_v2
         }
 
 
-        //CheckDelaunayAndRebuild - метод который тожепроверяет принадлежность к критерию и перестраивает треугольник
         /// <summary>
         /// Метод, проверяющий принадлежность к критерию и перестраивает треугольник.
         /// Строка идентификатора "M:Image_Restoring_v2.Triangulation.CheckDelaunayAndRebuild(Image_Restoring_v2.Arc)".
