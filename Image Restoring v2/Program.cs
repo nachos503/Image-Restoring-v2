@@ -6,12 +6,17 @@ using System.Windows.Forms;
 
 namespace Image_Restoring_v2
 {
+    /// <summary>
+    ///  Класс для входа в приложение.
+    ///  Строка идентификатора "T:Image_Restoring_v2.Program".
+    /// </summary> 
     internal static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
         [STAThread]
+        /// <summary>
+        /// Метод для входа в приложение.
+        /// Строка идентификатора "M:Image_Restoring_v2.Program.Main".
+        /// </summary>
         static void Main()
         {
             Application.EnableVisualStyles();
